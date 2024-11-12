@@ -7,10 +7,6 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colorConstants.primary,
   },
-  containerB: {
-    flex: 1,
-    backgroundColor: colorConstants.primaryB,
-  },
   backArrowContainer: {
     flexDirection: 'row',
     alignItems: 'center',

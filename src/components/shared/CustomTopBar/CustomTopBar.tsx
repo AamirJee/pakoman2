@@ -44,7 +44,7 @@ const CustomTopBar = ({
         </View>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate(languageTxt?.reactStackKeys?.profile );
+            navigation.navigate(languageTxt?.reactStackKeys?.profile);
           }}>
           <MaterialCommunityIcons
             name="account-circle"
@@ -69,7 +69,7 @@ const CustomTopBar = ({
           onPress={async () => {
             await asyncLogoutService(languageTxt, queryClient);
             navigation.navigate(languageTxt?.reactStackKeys?.guest?.name);
-          }}> 
+          }}>
           <Icon
             name="log-out-outline"
             size={dimensionConstants?.iconMiddle}

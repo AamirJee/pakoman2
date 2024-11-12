@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
-import { useForm, Controller } from 'react-hook-form';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import React, {useState} from 'react';
+import {View} from 'react-native';
+import {useForm, Controller} from 'react-hook-form';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { styles } from './styles';
-import { languageTxt } from '../../../../utils/constants/languageTxt';
-import { fontConstants } from '../../../../utils/constants/fontConstants';
-import { colorConstants } from '../../../../utils/constants/colorConstants';
-import { useMapAccountApi } from '../../../../modules/mobile_integration/hooks';
-import { dimensionConstants } from '../../../../utils/constants/dimensionConstants';
-import { useAuthentication } from '../../../../utils/globalHooks';
+import {styles} from './styles';
+import {languageTxt} from '../../../../utils/constants/languageTxt';
+import {fontConstants} from '../../../../utils/constants/fontConstants';
+import {colorConstants} from '../../../../utils/constants/colorConstants';
+import {useMapAccountApi} from '../../../../modules/mobile_integration/hooks';
+import {dimensionConstants} from '../../../../utils/constants/dimensionConstants';
 
 import Skeleton from '../../../shared/Skeleton';
 import CustomSnack from '../../../shared/CustomSnack';
@@ -25,19 +24,6 @@ const AddAccount = () => {
   const [errorSnack, setErrorSnack] = useState('');
   const [formError, setFormError] = useState(null);
 
-  const [mngmntCompany, setMngmntCompany] = useState('');
-  const [bgColor, setBgColor] = useState('');
-  const { data: authData }: any = useAuthentication();
-
-  useEffect(() => {
-    if (authData?.userProfile) 
-      console.log('Custom Fund Card', authData?.userProfile?.['MNGMNT COMPANY'])
-    setMngmntCompany(authData?.userProfile?.['MNGMNT COMPANY']);
-    let backgrndColor = mngmntCompany == 'RUSD Capital' ? colorConstants.primary : colorConstants.primaryB
-    setBgColor(backgrndColor)
-    console.log('Background Color Add Account: ', bgColor)
-  }, [bgColor]);
-
   const mapAccountMutation = useMapAccountApi();
 
   const {
@@ -46,7 +32,7 @@ const AddAccount = () => {
     clearErrors,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: {errors},
   } = useForm({
     defaultValues: {
       title: '',
@@ -61,7 +47,7 @@ const AddAccount = () => {
     clearErrors();
     setFormError(null);
 
-    const { title, cnic, userID } = data;
+    const {title, cnic, userID} = data;
     const mutationArgs: any = {
       title,
       cnic,
@@ -100,14 +86,12 @@ const AddAccount = () => {
       <Skeleton
         isBack={false}
         isBottomNav={true}
-        bgColor={bgColor}//{mngmntCompany !== 'RUSD Investment Bank' ? colorConstants.primaryB : colorConstants.primary}
         isLoading={isLoading}
         title={languageTxt?.reactStackKeys?.user?.addAccount}>
         <KeyboardAwareScrollView style={styles?.container}>
           <CustomTitle
             title={languageTxt?.accountDetails}
-            titleColor={bgColor}//{mngmntCompany !== 'RUSD Investment Bank' ? colorConstants.primaryB : colorConstants.primary}
-            //titleColor={colorConstants?.drakGray}
+            titleColor={colorConstants?.drakGray}
             fontWeight={fontConstants?.fontWeight600}
             fontSize={fontConstants?.header}
             extraStyles={{
@@ -126,7 +110,7 @@ const AddAccount = () => {
           <View style={styles?.formContainer}>
             <Controller
               control={control}
-              render={({ field: { onChange, onBlur, value } }) => (
+              render={({field: {onChange, onBlur, value}}) => (
                 <CustomInput
                   error={errors && !!errors?.userID}
                   errorMsg={errors && errors?.userID?.message}
@@ -156,7 +140,7 @@ const AddAccount = () => {
 
             <Controller
               control={control}
-              render={({ field: { onChange, onBlur, value } }) => (
+              render={({field: {onChange, onBlur, value}}) => (
                 <CustomInput
                   error={errors && !!errors?.title}
                   errorMsg={errors && errors?.title?.message}
@@ -185,7 +169,7 @@ const AddAccount = () => {
 
             <Controller
               control={control}
-              render={({ field: { onChange, onBlur, value } }) => (
+              render={({field: {onChange, onBlur, value}}) => (
                 <CustomInput
                   error={errors && !!errors?.cnic}
                   errorMsg={errors && errors?.cnic?.message}
@@ -214,7 +198,6 @@ const AddAccount = () => {
             />
 
             <CustomButton
-              backgroundColor={bgColor}
               isDisabled={mapAccountMutation?.isLoading}
               buttonText={languageTxt?.submit}
               handleOnPress={handleSubmit(onSubmit)}

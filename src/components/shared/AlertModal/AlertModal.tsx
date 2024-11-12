@@ -6,12 +6,10 @@ import {languageTxt} from '../../../utils/constants/languageTxt';
 import {fontConstants} from '../../../utils/constants/fontConstants';
 import {dimensionConstants} from '../../../utils/constants/dimensionConstants';
 
-
 import CustomTitle from '../CustomTitle';
 import CustomModal from '../CustomModal';
 import CustomButton from '../CustomButton';
 import LogoIcon from '../../../assets/logo/logo.png';
-
 
 interface CustomModalInterface {
   open: boolean;
@@ -27,9 +25,8 @@ const AlertModal = ({
   description = languageTxt.an_unexpected_error,
   closeLink = false,
 }: CustomModalInterface) => {
-
   const navigation = useNavigation();
-  
+
   const handlePressClose = () => {
     if (closeLink) {
       if (navigation.canGoBack()) {

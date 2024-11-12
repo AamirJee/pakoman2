@@ -9,8 +9,6 @@ import {languageTxt} from '../../../../../utils/constants/languageTxt';
 import {fontConstants} from '../../../../../utils/constants/fontConstants';
 import {colorConstants} from '../../../../../utils/constants/colorConstants';
 import {dimensionConstants} from '../../../../../utils/constants/dimensionConstants';
-import { useAuthentication} from '../../../../../utils/globalHooks';
-
 import {CustomSummaryCardInterface} from '../../../../shared/CustomSummaryCard/CustomSummaryCard.interface';
 import {
   usePendingInvestment,
@@ -24,7 +22,6 @@ import CustomSummaryCard from '../../../../shared/CustomSummaryCard';
 
 const Summary = () => {
   const [index, setIndex] = useState(0);
-
   const [allowedTransactionTypes, setAllowedTransactionTypes] = useState({
     Conversion: 'false',
     Investment: 'false',
@@ -32,20 +29,6 @@ const Summary = () => {
   });
   const {data, refetch} = useGetAllowedTransactionTypes();
   const [isLoading, setIsLoading] = useState(true);
-  
-  const [mngmntCompany, setMngmntCompany] = useState('');
-  const [bgColor, setBgColor] = useState('');
-  const { data: authData }: any = useAuthentication();
-
-  useEffect(() => {
-    if (authData?.userProfile)
-      console.log('', authData?.userProfile?.['MNGMNT COMPANY'])
-      setMngmntCompany(authData?.userProfile?.['MNGMNT COMPANY']);
-      let backgrndColor = mngmntCompany === 'RUSD Capital' ? '#374265' : '#60975c'
-      setBgColor(backgrndColor)
-  }, [bgColor]);
-
-  
   useEffect(() => {
     if (data)
       data
@@ -97,7 +80,6 @@ const Summary = () => {
     <Skeleton
       isBack={true}
       isBottomNav={true}
-      bgColor={bgColor}
       isLoading={isLoadingInvestment || isLoadingRedemption || isLoading}
       title={
         languageTxt?.reactStackKeys?.user?.eTransactions?.summary
@@ -106,17 +88,17 @@ const Summary = () => {
       <View style={styles.container}>
         <Tab value={index} onChange={setIndex} disableIndicator>
           <Tab.Item
-            title={languageTxt.pendingInvestment}          
+            title={languageTxt.pendingInvestment}
             containerStyle={[
               styles.containerTab,
               allowedTransactionTypes?.['Investment'] == 'false' && {
-                display: 'none'
+                display: 'none',
               },
             ]}
             TouchableComponent={TouchableOpacity}
             buttonStyle={[
               styles.buttonStyle,
-              index === 0 ? {backgroundColor:bgColor} : {},
+              index === 0 ? styles.tabActive : {},
             ]}
             titleStyle={[
               styles.tabTittle,
@@ -183,12 +165,11 @@ const Summary = () => {
           </>
         ) : (
           <>
-            {redemptionConversion ? ( 
+            {redemptionConversion ? (
               redemptionConversion?.map(
                 (element: CustomSummaryCardInterface, key: number) => (
                   <CustomSummaryCard
                     key={key}
-                    bgColor= {bgColor}
                     amount={element.amount}
                     from={element.from}
                     to={element.to}

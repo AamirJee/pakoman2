@@ -1,16 +1,14 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import { languageTxt } from '../../../utils/constants/languageTxt';
-import { colorConstants } from '../../../utils/constants/colorConstants';
+import {languageTxt} from '../../../utils/constants/languageTxt';
+import {colorConstants} from '../../../utils/constants/colorConstants';
 
 import Menus from '../../../components/screens/UserScreen/ETransactions/Menu/Menus';
 import Summary from '../../../components/screens/UserScreen/ETransactions/Summary';
-
+import ERedemptionNavigator from './ERedemptionNavigator';
 import EConversionNavigator from './EConversionNavigator';
 import EInvestmentNavigator from './EInvestmentNavigator';
-import ERedemptionNavigator from './ERedemptionNavigator';
-
 
 const ETransactionsNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -31,12 +29,6 @@ const ETransactionsNavigator = () => {
         />
         <Stack.Screen
           name={
-            languageTxt?.reactStackKeys?.user?.eTransactions?.eInvestment?.name
-          }
-          component={EInvestmentNavigator}
-        />
-        <Stack.Screen
-          name={
             languageTxt?.reactStackKeys?.user?.eTransactions?.eRedemption?.name
           }
           component={ERedemptionNavigator}
@@ -48,13 +40,17 @@ const ETransactionsNavigator = () => {
           component={EConversionNavigator}
         />
         <Stack.Screen
+          name={
+            languageTxt?.reactStackKeys?.user?.eTransactions?.eInvestment?.name
+          }
+          component={EInvestmentNavigator}
+        />
+        <Stack.Screen
           name={languageTxt?.reactStackKeys?.user?.eTransactions?.summary?.name}
           component={Summary}
         />
       </Stack.Group>
     </Stack.Navigator>
-
-
   );
 };
 

@@ -98,7 +98,7 @@ const CustomETransactionsCard = ({
                 fontSize={fontConstants.middle}
               />
               <CustomTitle
-                title={`${numberWithCommas(Number(redeemableAmount))}`}
+                title={`PKR ${numberWithCommas(Number(redeemableAmount))}`}
                 fontSize={fontConstants.small}
                 fontWeight={fontConstants.fontWeight600}
                 titleColor={colorConstants?.secondaryLight}
@@ -113,7 +113,7 @@ const CustomETransactionsCard = ({
             </View>
           </View>
           <View style={styles.bottomContainer}>
-            {/* <View style={styles.textContainer}>
+            <View style={styles.textContainer}>
               <CustomTitle
                 title={languageTxt.reqUnits}
                 fontSize={fontConstants.small}
@@ -124,12 +124,11 @@ const CustomETransactionsCard = ({
                 fontWeight={fontConstants.fontWeight600}
                 titleColor={colorConstants?.secondaryLight}
               />
-            </View> */}
+            </View>
             <View style={styles.textContainer}>
               <CustomTitle
-                title={languageTxt.existingFundAvailable}
+                title={languageTxt.balUnits}
                 fontSize={fontConstants.small}
-                titleColor={colorConstants?.white}
               />
               <CustomTitle
                 title={`${numberWithCommas(Number(balanceUnits))}`}

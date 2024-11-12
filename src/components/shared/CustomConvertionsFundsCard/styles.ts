@@ -30,7 +30,4 @@ export const styles = StyleSheet.create({
     marginTop: dimensionConstants.marginXSmall,
     paddingTop: dimensionConstants.marginXSmall,
   },
-  lineBreak: {
-    margin: dimensionConstants.marginSmall,
-  },
 });

@@ -12,7 +12,7 @@ type Props = BottomTabBarButtonProps & {
 const TabBarAdvancedButton: React.FC<Props> = ({bgColor, ...props}) => (
   <View style={styles.container} pointerEvents="box-none">
     <TouchableOpacity
-      style={[styles.button,{backgroundColor:bgColor}]}
+      style={styles.button}
       activeOpacity={0.9}
       onPress={props.onPress}>
       <MaterialCommunityIcons name="home" style={styles.buttonIcon} />

@@ -29,8 +29,6 @@ interface SkeletonProps {
   topContainerStyle?: StyleProp<ViewStyle>;
   backClickEventStatus?: boolean;
   backClickEvent?: any;
-  bgColor?:string,
-
 }
 
 const Skeleton = ({
@@ -39,20 +37,19 @@ const Skeleton = ({
   isLoading = false,
   isBack = true,
   isScroll = true,
-  isBottomNav = true,
+  isBottomNav = false,
   containerStyle,
   topContainerStyle,
   backClickEventStatus = false,
   backClickEvent = () => {},
-  bgColor='',
 }: SkeletonProps) => {
-
   const navigation = useNavigation();
+
   const Container = isScroll ? ScrollView : View;
   const BottomNavCss = isBottomNav ? {marginBottom: 50} : {};
 
   return (
-    <View  style={[styles.container,{backgroundColor:bgColor}]}>
+    <View style={styles.container}>
       <View style={[styles.backArrowContainer, topContainerStyle]}>
         {isBack && (
           <TouchableIcon

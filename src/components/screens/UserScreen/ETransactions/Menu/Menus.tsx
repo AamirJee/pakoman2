@@ -1,28 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
-import { languageTxt } from '../../../../../utils/constants/languageTxt';
-import { colorConstants } from '../../../../../utils/constants/colorConstants';
-import { dimensionConstants } from '../../../../../utils/constants/dimensionConstants';
+import {languageTxt} from '../../../../../utils/constants/languageTxt';
+import {colorConstants} from '../../../../../utils/constants/colorConstants';
+import {dimensionConstants} from '../../../../../utils/constants/dimensionConstants';
 
 import Skeleton from '../../../../shared/Skeleton';
 import CustomList from '../../../../shared/CustomList';
 import CustomMenuCard from '../../../../shared/CustomMenuCard';
-import { useGetAllowedTransactionTypes } from '../../../../../modules/m_transactions/hooks';
-import { useAuthentication } from '../../../../../utils/globalHooks';
+import {useGetAllowedTransactionTypes} from '../../../../../modules/m_transactions/hooks';
 
 const Menus = () => {
-
   const navigation = useNavigation();
-  const [mngmntCompany, setMngmntCompany] = useState('');
-  const [bgColor, setBgColor] = useState('');
-  const { data: authData }: any = useAuthentication();
-
 
   const [data, setData] = useState([]);
-  const { data: transactionTypes, refetch } = useGetAllowedTransactionTypes();
+  const {data: transactionTypes, refetch} = useGetAllowedTransactionTypes();
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     if (transactionTypes)
       transactionTypes
@@ -30,20 +25,6 @@ const Menus = () => {
           setIsLoading(false);
           if (value?.data) {
             let array: any = [];
-            if (value?.data?.Investment == 'true') {
-              array.push({
-                title:
-                  languageTxt?.reactStackKeys?.user?.eTransactions?.eInvestment
-                    ?.name,
-                icon: (
-                  <MaterialCommunityIcons
-                    name="finance"
-                    size={dimensionConstants?.iconLarge}
-                    color={colorConstants?.white}
-                  />
-                ),
-              });
-            }
             if (value?.data?.Redemption == 'true') {
               array.push({
                 title:
@@ -72,7 +53,20 @@ const Menus = () => {
                 ),
               });
             }
-
+            if (value?.data?.Investment == 'true') {
+              array.push({
+                title:
+                  languageTxt?.reactStackKeys?.user?.eTransactions?.eInvestment
+                    ?.name,
+                icon: (
+                  <MaterialCommunityIcons
+                    name="finance"
+                    size={dimensionConstants?.iconLarge}
+                    color={colorConstants?.white}
+                  />
+                ),
+              });
+            }
             array.push({
               title:
                 languageTxt?.reactStackKeys?.user?.eTransactions?.summary?.name,
@@ -92,16 +86,6 @@ const Menus = () => {
         });
   }, [transactionTypes]);
 
-  useEffect(() => {
-    if (authData?.userProfile)
-      console.log('Menu', authData?.userProfile?.['MNGMNT COMPANY'])
-    setMngmntCompany(authData?.userProfile?.['MNGMNT COMPANY']);
-    let backgrndColor = mngmntCompany == 'RUSD Capital' ? colorConstants.primary : colorConstants.primaryB
-    setBgColor(backgrndColor)
-    console.log('Background Color Menu: ', bgColor) 
-  }, [bgColor]);
-
-
   const renderCard = (item: any) => {
     return (
       <CustomMenuCard
@@ -120,7 +104,6 @@ const Menus = () => {
       isScroll={false}
       isBottomNav={true}
       isLoading={isLoading}
-      bgColor={bgColor}
       title={languageTxt?.reactStackKeys?.user?.eTransactions?.name}>
       <CustomList renderItemView={renderCard} listData={data} />
     </Skeleton>

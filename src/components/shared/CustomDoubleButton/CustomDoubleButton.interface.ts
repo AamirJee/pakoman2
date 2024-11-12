@@ -9,5 +9,4 @@ export interface CustomDoubleButtonInterface {
   primaryExtraStyles?: any;
   primaryTextColor?: string;
   secondaryTextColor?: string;
-  isLogin?: boolean;
 }

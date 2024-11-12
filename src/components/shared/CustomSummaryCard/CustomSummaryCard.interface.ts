@@ -6,5 +6,4 @@ export interface CustomSummaryCardInterface {
   transactionType: string;
   units: string;
   index?: number;
-  bgColor?: string;
 }

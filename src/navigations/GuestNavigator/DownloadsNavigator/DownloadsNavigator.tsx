@@ -14,7 +14,6 @@ import ProxyVotingPolicy from '../../../components/screens/GuestScreens/Download
 import ProvisioningPolicyFinal from '../../../components/screens/GuestScreens/Downloads/ProvisioningPolicyFinal';
 import Fatwah from '../../../components/screens/GuestScreens/Downloads/Fatwah';
 import ComplianceCertificate from '../../../components/screens/GuestScreens/Downloads/ComplianceCertificate';
-import { useNavigation } from '@react-navigation/native';
 
 const DownloadsNavigator = () => {
   const Stack = createNativeStackNavigator();

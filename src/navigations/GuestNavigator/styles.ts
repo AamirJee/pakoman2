@@ -12,8 +12,8 @@ export const styles = StyleSheet.create({
     backgroundColor: colorConstants.white,
     ...shadowConstants,
   },
-  FillLine: {
-    backgroundColor: 'green',
+  xFillLine: {
+    backgroundColor: colorConstants?.iconBg,
     position: 'absolute',
     bottom: 0,
     left: 0,

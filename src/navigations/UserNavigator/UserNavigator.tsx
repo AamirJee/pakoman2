@@ -25,26 +25,10 @@ import {asyncLogoutService} from '../../config/asyncStorage/asynDataStore';
 import {useQueryClient} from 'react-query';
 import {useNavigation} from '@react-navigation/native';
 import Menus from '../../components/screens/UserScreen/ETransactions/Menu';
-import { useAuthentication } from '../../utils/globalHooks';
 
 const BottomBar = createBottomTabNavigator();
 
 const UserNavigator = () => {
-
-  const [mngmntCompany, setMngmntCompany] = useState('');
-  const [bgColor, setBgColor] = useState('');
-  const { data: authData }: any = useAuthentication();
-
-  useEffect(() => {
-    if (authData?.userProfile)
-      console.log('', authData?.userProfile?.['MNGMNT COMPANY'])
-      setMngmntCompany(authData?.userProfile?.['MNGMNT COMPANY']);
-      let backgrndColor = mngmntCompany === 'RUSD Capital' ? '#374265' : '#60975c'
-      setBgColor(backgrndColor)
-  }, [bgColor]);
-
-
-
   const navigation = useNavigation();
   const queryClient = useQueryClient();
   const [errorSnack, setErrorSnack] = useState('');
@@ -124,7 +108,7 @@ const UserNavigator = () => {
           options={{
             tabBarButton: props => (
               <TabBarAdvancedButton
-                bgColor= {bgColor}//{mngmntCompany !== 'RUSD Capital' ? colorConstants.primary : colorConstants.primaryB}
+                bgColor={colorConstants?.iconBg}
                 {...props}
               />
             ),

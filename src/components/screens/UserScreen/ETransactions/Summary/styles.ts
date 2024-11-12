@@ -1,11 +1,11 @@
 import {StyleSheet} from 'react-native';
 import {colorConstants} from '../../../../../utils/constants/colorConstants';
 import {dimensionConstants} from '../../../../../utils/constants/dimensionConstants';
+import {fontConstants} from '../../../../../utils/constants/fontConstants';
 
 export const styles = StyleSheet.create({
   container: {
     margin: dimensionConstants.marginXLarge,
-    backgroundColor: 'white',
   },
   noDataContainer: {
     alignItems: 'center',
@@ -37,7 +37,7 @@ export const styles = StyleSheet.create({
     borderBottomColor: colorConstants.primary,
   },
   tabTittle: {
-    fontSize: 10,
+    fontSize: fontConstants.small,
     color: colorConstants.primary,
   },
   tabTittleActive: {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {View} from 'react-native';
 import {
   BottomTabBar,
@@ -19,21 +19,16 @@ import WeServeYouNavigator from './WeServeYouNavigator';
 import DownloadsNavigator from './DownloadsNavigator';
 
 import TabBarAdvancedButton from '../../components/shared/TabBarAdvancedButton';
-import { useAuthentication } from '../../utils/globalHooks';
-import HomeNavigator from '../UserNavigator/HomeNavigator';
-import Login from '../../components/screens/GuestScreens/Login';
 
 const BottomBar = createBottomTabNavigator();
 
 const GuestNavigator = () => {
-const { data: authData }: any = useAuthentication();
-
   return (
     <BottomBar.Navigator
       tabBar={props => (
         <View style={styles.navigatorContainer}>
           <BottomTabBar {...props} />
-          {IS_IPHONE_X && <View style={styles.FillLine} />}
+          {IS_IPHONE_X && <View style={styles.xFillLine} />}
         </View>
       )}
       initialRouteName={languageTxt?.reactStackKeys?.auth?.name}
@@ -42,27 +37,22 @@ const { data: authData }: any = useAuthentication();
         tabBarInactiveTintColor: colorConstants?.gray,
         headerShown: false,
       }}>
-      <BottomBar.Screen        
-        // name={"ABOUTUS"}
-        name={languageTxt?.reactStackKeys?.guest?.aboutus?.name}        
-        // component={HomeNavigatorL}  
-        component={Login}  
+      <BottomBar.Screen
+        name={languageTxt?.reactStackKeys?.guest?.aboutus?.name}
+        component={AboutusNavigator}
         options={{
           tabBarIcon: ({color}) => (
             <MaterialCommunityIcons
               name="information"
               color={color}
-              size={dimensionConstants?.iconSmall}              
+              size={dimensionConstants?.iconSmall}
             />
           ),
         }}
-        
       />
       <BottomBar.Screen
         name={languageTxt?.reactStackKeys?.guest?.whatWeDo?.name}
-        // name={"WHATWEDO"}
-        // component={WhatWeDoNavigator}
-        component={Login}  
+        component={WhatWeDoNavigator}
         options={{
           tabBarIcon: ({color}) => (
             <MaterialCommunityIcons
@@ -78,15 +68,13 @@ const { data: authData }: any = useAuthentication();
         component={AuthNavigator}
         options={{
           tabBarButton: props => (
-            <TabBarAdvancedButton bgColor={colorConstants.primary} {...props} />
+            <TabBarAdvancedButton bgColor={colorConstants?.iconBg} {...props} />
           ),
         }}
       />
       <BottomBar.Screen
-        // name={"WESERVEYOU"}
-        name={languageTxt?.reactStackKeys?.guest?.weServeYou?.name}        
-        // component={WeServeYouNavigator}
-        component={Login}  
+        name={languageTxt?.reactStackKeys?.guest?.weServeYou?.name}
+        component={WeServeYouNavigator}
         options={{
           tabBarIcon: ({color}) => (
             <MaterialCommunityIcons
@@ -98,10 +86,8 @@ const { data: authData }: any = useAuthentication();
         }}
       />
       <BottomBar.Screen
-        // name={"DOWNLOAD"}
         name={languageTxt?.reactStackKeys?.guest?.downloads?.name}
-        // component={DownloadsNavigator}
-        component={Login}  
+        component={DownloadsNavigator}
         options={{
           tabBarIcon: ({color}) => (
             <MaterialCommunityIcons

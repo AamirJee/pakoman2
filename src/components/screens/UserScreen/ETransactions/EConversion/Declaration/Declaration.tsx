@@ -33,7 +33,7 @@ const Declaration = () => {
             }}
           />
           <CustomTitle
-            title={languageTxt.eTransactionsDeclaration0}
+            title={languageTxt.eTransactionsDeclaration1}
             fontSize={fontConstants.middle}
             fontWeight={fontConstants.fontWeight400}
             extraStyles={{

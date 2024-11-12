@@ -8,7 +8,7 @@ export const styles = ({bottom}: any) => {
     ? {marginBottom: dimensionConstants?.marginLarge}
     : {
         marginBottom: 'auto',
-      };      
+      };
   return StyleSheet.create({
     container: {
       flex: 1,

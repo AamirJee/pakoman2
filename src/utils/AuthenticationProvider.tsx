@@ -16,7 +16,7 @@ const AuthenticationReducer = (state: any, action: any) => {
     case 'accCode':
       return {
         ...state,
-        accCode: action.payload.accCode,      
+        accCode: action.payload.accCode,
       };
     default:
       return state;
@@ -27,7 +27,6 @@ const AuthenticationProvider = ({children}: any) => {
   const [state, dispatch] = useReducer(AuthenticationReducer, {
     accCode: undefined,
     userProfile: {},
-
   });
 
   const addUserProfile = (userProfile: any) => {
@@ -46,7 +45,7 @@ const AuthenticationProvider = ({children}: any) => {
 
   return (
     <AuthenticationContext.Provider
-      value={{data: state, addUserProfile, addAccCode, }}>
+      value={{data: state, addUserProfile, addAccCode}}>
       {children}
     </AuthenticationContext.Provider>
   );

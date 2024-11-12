@@ -88,7 +88,7 @@ const CustomConvertionsFundsCard = ({
                 fontSize={fontConstants.middle}
               />
               <CustomTitle
-                title={`${numberWithCommas(Number(convertableAmount))}`}
+                title={`PKR ${numberWithCommas(Number(convertableAmount))}`}
                 fontSize={fontConstants.small}
                 fontWeight={fontConstants.fontWeight600}
                 titleColor={colorConstants?.secondaryLight}
@@ -107,7 +107,6 @@ const CustomConvertionsFundsCard = ({
               <CustomTitle
                 title={languageTxt.reqUnits}
                 fontSize={fontConstants.small}
-                titleColor={colorConstants?.white}
               />
               <CustomTitle
                 title={`${numberWithCommas(Number(requestedUnits))}`}
@@ -116,18 +115,16 @@ const CustomConvertionsFundsCard = ({
                 titleColor={colorConstants?.secondaryLight}
               />
             </View>
-            <View style={styles.lineBreak}></View>
             <View style={styles.textContainer}>
               <CustomTitle
-                title={languageTxt.existingFundAvailable}
-                fontSize={fontConstants.large}
-                titleColor={colorConstants?.white}
+                title={languageTxt.balUnits}
+                fontSize={fontConstants.small}
               />
               <CustomTitle
                 title={`${numberWithCommas(Number(balanceUnits))}`}
                 fontSize={fontConstants.small}
                 fontWeight={fontConstants.fontWeight600}
-                titleColor={colorConstants?.white}
+                titleColor={colorConstants?.secondaryLight}
               />
             </View>
           </View>

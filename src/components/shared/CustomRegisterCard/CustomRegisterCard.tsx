@@ -17,7 +17,6 @@ const CustomRegisterCard = ({
   title,
   description,
   handleOnPress,
-  bgColor
 }: CustomRegisterCardInterface) => {
   return (
     <CustomCard
@@ -38,7 +37,6 @@ const CustomRegisterCard = ({
             fontSize={fontConstants?.small}
           />
           <CustomButton
-            backgroundColor={bgColor}
             buttonText={languageTxt?.register}
             width={100}
             extraStyles={styles?.button}

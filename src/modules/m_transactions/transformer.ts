@@ -1,57 +1,4 @@
 function transformDataInfo(data: any) {
-  //console.log(data)
-  return {
-    'Account Title': data['ACC_TITLE']?.[0],
-    'Account Status': data['ACC_STATUS']?.[0],
-    'Email Address': data['ACC_EMAILADDRESS']?.[0],
-    'Account Opening Date': data['ACC_OPENINGDATE']?.[0],
-    'Cell Number': data['ACC_SMSCELLNUMBER']?.[0],
-    'Account Type': data['ACC_ACCOUNTTYPE']?.[0],
-    'CNIC Expiry': data['ACC_CNICEXPIRYDATE']?.[0],
-    'Account Risk Level': data['ACC_RISKLEVEL']?.[0],
-    'Account Zakat Status': data['ACC_ZAKATSTATUS']?.[0],
-    'Bank Name': data['BankName']?.[0],
-    'Account No': data['AccountNo']?.[0],
-    'CLASS TYPE' : data['CLASS_TYPE']?.[0],
-    'MNGMNT COMPANY': data['MNGMNT_COMPANY']?.[0],
-  };
-}
-
-function transformInvestmentInfo(data: any) {
-   return (
-    data &&
-    data.map((item: any) => {
-      console.log('DATA ITEM ',item)
-      return {
-        balanceUnits: item?.BalanceUnits?.[0],
-        fundClassType: item?.Class_Type?.[0]
-          ? item?.Class_Type?.[0]
-          : item?.Fund_Class_Type?.[0] || '',
-        convertableAmount: item?.convertableAmount?.[0] || '',
-        convertableUnits: item?.convertableUnits?.[0] || '',
-        fundCode: item?.Fund_Code?.[0] || '',
-        fundID: item?.Fund_ID?.[0] || '',
-        fundName: item?.List_Of_Funds?.[0]
-          ? item?.List_Of_Funds?.[0]
-          : item?.Fund_Name?.[0] || '',
-        minimunInvestmentAmount: item?.Minimum_Investment_Amount?.[0]
-          ? item?.Minimum_Investment_Amount?.[0]
-          : item?.Minimun_Investment_Amount?.[0] || '',
-        minimunReInvestmentAmount: item?.['Minimun_Re-Investment_Amount']?.[0]
-          ? item?.['Minimun_Re-Investment_Amount']?.[0]
-          : item?.Minimum_ReInvestment_Amount?.[0] || '',
-        requestedUnits: item?.Requested_Units?.[0] || '',
-        settlementAccount: item?.Settlement_Account?.[0] || '',
-        fundTypeName: item?.Unit_Type?.[0]
-          ? item?.Unit_Type?.[0]
-          : item?.Fund_Type_Name?.[0] || '',
-        isParkingFund: item?.IsParkingFund?.[0]  
-    
-
-      };
-    })
-  );
-  /*
   return {
     'Account Title': data['ACC_TITLE']?.[0],
     'Account Status': data['ACC_STATUS']?.[0],
@@ -65,10 +12,7 @@ function transformInvestmentInfo(data: any) {
     'Bank Name': data['BankName']?.[0],
     'Account No': data['AccountNo']?.[0],
   };
-  */
-
 }
-
 
 function transformChartInfo(data: any) {
   const colorCode = [
@@ -124,66 +68,36 @@ function transformRedemptionInfo(data: any) {
         requestedUnits: item?.Requested_Units?.[0] || '',
         response: item?.Response?.[0] || '',
         unitPrice: item?.Unit_Price?.[0] || '',
-        productCode: item?.Product_Code?.[0] || '',
-         
       };
     })
   );
 }
 
-function transformGetServiceFee(data: any) {
- return (
+function transformInvestmentInfo(data: any) {
+  return (
     data &&
     data.map((item: any) => {
-      //console.log('ITEM ', item)
       return {
-        tgsCode: item?.TGS_CODE?.[0]  || '',
-        tgsId: item?.TGS_ID?.[0]  || '',
-        //tsfAmount: item?.TSF_AMOUNT?.[0].substring(0,8) || '',
-        tsfAmount: Number(item?.TSF_AMOUNT?.[0]).toFixed(4) || '',
-        tsfAmountFrom: item?.TSF_AMOUNTFROM?.[0] || '',
-        tsfAmountTo: item?.TSF_AMOUNTTO?.[0]  || '',
-        tsfCommissioneeId: item?.TSF_COMMISSIONEEID?.[0] || '',        
+        fundCode: item?.Fund_Code?.[0] || '',
+        fundId: item?.Fund_ID?.[0] || '',
+        fundName: item?.List_Of_Funds?.[0] || '',
+        fundClassType: item?.Class_Type?.[0] || '',
+        fundTypeName: item?.Unit_Type?.[0] || '',
+        minimunInvestmentAmount: item?.Minimun_Investment_Amount?.[0] || '',
+        minimunReInvestmentAmount:
+          item?.['Minimun_Re-Investment_Amount']?.[0] || '',
+        settlementAccount: item?.Settlement_Account?.[0] || '',
+        balanceUnits: item?.BalanceUnits?.[0] || '',
+        requestedUnits: item?.RequestedUnits?.[0] || '',
       };
     })
   );
-  
 }
-
-function transformGetAllMgmtCompanies(data: any) {
-  return (
-     data &&
-     data.map((item: any) => {
-       //console.log('ITEM ', item)
-       return {        
-         retCode: item?.RET_CODE?.[0]  || '',
-         retName: item?.RET_NAME?.[0]  || '',
-       };
-     })
-   );
-   
- }
-
-function transformBackendLoad(data: any) {
-  return (
-     data &&
-     data.map((item: any) => {
-       //console.log('ITEM ', item)
-       return {
-         tsfAmount: item?.TSF_AMOUNT?.[0].substring(0,8) || '',         
-       };
-     })
-   );
-   
- }
-
-
 
 function transformConvertionsOfFunds(data: any) {
   return (
     data &&
     data.map((item: any) => {
-      //console.log('DATA ITEM ',item)
       return {
         balanceUnits: item?.Balance_Units?.[0] || '',
         fundClassType: item?.Class_Type?.[0]
@@ -207,9 +121,6 @@ function transformConvertionsOfFunds(data: any) {
         fundTypeName: item?.Unit_Type?.[0]
           ? item?.Unit_Type?.[0]
           : item?.Fund_Type_Name?.[0] || '',
-        isParkingFund: item?.IsParkingFund?.[0]  
-    
-
       };
     })
   );
@@ -295,6 +206,19 @@ function transformAllowedTransactionTypes(data: any, accountType: string) {
   return array;
 }
 
+function transformPoliciesInfo(data: any) {
+  return (
+    data &&
+    data.map((info: any, key: number) => {
+      const json = {
+        name: info?.POLICY_NAME?.[0],
+        url: info?.POLICY_URL?.[0],
+      };
+      return json;
+    })
+  );
+}
+
 export {
   transformDataInfo,
   transformChartInfo,
@@ -305,6 +229,5 @@ export {
   transformUOSAlert,
   transformAllowedTransactionTypes,
   transformInvestmentInfo,
-  transformGetServiceFee,
-  transformGetAllMgmtCompanies,
+  transformPoliciesInfo,
 };

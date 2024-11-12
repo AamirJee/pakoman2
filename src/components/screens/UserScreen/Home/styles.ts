@@ -7,7 +7,6 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginBottom: dimensionConstants?.bottomNavSize,
-    
   },
   chartContainer: {
     height: 140,
@@ -16,7 +15,6 @@ export const styles = StyleSheet.create({
     backgroundColor: colorConstants?.primary,
     borderBottomEndRadius: dimensionConstants?.borderRadiusLarge,
     borderBottomStartRadius: dimensionConstants?.borderRadiusLarge,
-    
   },
   cardContainer: {
     paddingHorizontal: dimensionConstants?.paddingXLarge,
@@ -28,7 +26,6 @@ export const styles = StyleSheet.create({
   totalValueContainer: {
     // flex: 1,
     width: '40%',
-    paddingLeft: 10,
     paddingRight: 20,
     overflow: 'hidden',
     alignSelf: 'center',

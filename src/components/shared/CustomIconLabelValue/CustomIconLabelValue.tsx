@@ -24,7 +24,7 @@ const CustomIconLabelValue = ({
         size={dimensionConstants?.iconXSmall}
         style={styles?.totalIcon}
       />
-      <View>
+      <View style={{flex: 1}}>
         <CustomTitle
           title={label}
           fontSize={fontConstants?.small}

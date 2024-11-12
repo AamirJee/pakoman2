@@ -43,8 +43,12 @@ import CustomFundDetailCard from '../../../../../shared/CustomFundDetailCard';
 import AlertModal from '../../../../../shared/AlertModal/AlertModal';
 
 const Form = () => {
-  const {data: convertionsOfFundsInData, refetch: refetchConvertionsOfFundsIn} = useConvertionsOfFundsIn();
-  const {data: convertionsOfFundsOutData,refetch: refetchConvertionsOfFundsOut,} = useConvertionsOfFundsOut();
+  const {data: convertionsOfFundsInData, refetch: refetchConvertionsOfFundsIn} =
+    useConvertionsOfFundsIn();
+  const {
+    data: convertionsOfFundsOutData,
+    refetch: refetchConvertionsOfFundsOut,
+  } = useConvertionsOfFundsOut();
 
   const navigation = useNavigation();
   const [step, setStep] = useState(0);
@@ -64,18 +68,20 @@ const Form = () => {
   const [requestedUnits, setrequestedUnits] = useState(0.0);
   const [balanceUnits, setbalanceUnits] = useState(0.0);
   const [minimunInvestmentAmount, setminimunInvestmentAmount] = useState(0.0);
-  const [minimunReInvestmentAmount, setminimunReInvestmentAmount] = useState(0.0);
+  const [minimunReInvestmentAmount, setminimunReInvestmentAmount] =
+    useState(0.0);
 
   const [convertableUnitsIn, setconvertableUnitsIn] = useState(0.0);
   const [convertableAmountIn, setconvertableAmountIn] = useState(0.0);
   const [requestedUnitsIn, setrequestedUnitsIn] = useState(0.0);
   const [balanceUnitsIn, setbalanceUnitsIn] = useState(0.0);
-  const [minimunInvestmentAmountIn, setminimunInvestmentAmountIn] = useState(0.0);
-  const [minimunReInvestmentAmountIn, setminimunReInvestmentAmountIn] = useState(0.0);
+  const [minimunInvestmentAmountIn, setminimunInvestmentAmountIn] =
+    useState(0.0);
+  const [minimunReInvestmentAmountIn, setminimunReInvestmentAmountIn] =
+    useState(0.0);
   const [convertableAmountError, setConvertableAmountError] = useState('');
 
   const [otpRemainingTimeSec, setOtpRemainingTimeSec] = useState(0);
-
   const [formData, setFormData] = useState({
     fundNameOut: '',
     fundOutUnitClass: '',
@@ -89,7 +95,6 @@ const Form = () => {
     isEntire: '0',
     username: '',
   });
-  
   const [otp, setotp] = useState('');
   const [transactionID, setTransactionID] = useState('');
   const [accountCode, setAccountCode] = useState('');
@@ -97,14 +102,15 @@ const Form = () => {
   const [msgModal, setMsgModal] = useState(false);
   const [alertTitle, setAlertTitle] = useState('');
   const [alertDescription, setAlertDescription] = useState('');
-
   useEffect(() => {
     if (convertionsOfFundsInData)
       convertionsOfFundsInData
         .then((value: any) => {
           setIsLoadingFundsIn(false);
           let array: any = [];
-          value?.data?.map((val: any) => val?.fundName != FundsOut && array.push(val),);
+          value?.data?.map(
+            (val: any) => val?.fundName != FundsOut && array.push(val),
+          );
           setConvertionsOfFundsIn(array);
         })
         .catch((e: any) => {
@@ -150,12 +156,14 @@ const Form = () => {
   });
 
   const onSubmitGenerateTpin = async (data: any) => {
-    if (Number(getValues().conversionAmount || 0) >= Number(minimunInvestmentAmountIn) && getValues().isEntire == '0' ) 
-    {
-      const userInfo = await getService(languageTxt?.reactAsyncStorageKeys?.userInfo,);
+    if (
+      Number(getValues().conversionAmount || 0) <= Number(convertableAmount)
+    ) {
+      const userInfo = await getService(
+        languageTxt?.reactAsyncStorageKeys?.userInfo,
+      );
       const newUserInfo = userInfo && JSON.parse(userInfo);
       const accCode = await getAccCode();
-
       setAccountCode(`${accCode}`);
       const tID = `OECN_${accCode}_${moment().format('MMDDyyyy_HHmmss.ms')}`;
       setTransactionID(tID);
@@ -163,7 +171,12 @@ const Form = () => {
       setFormData(data);
 
       const username = await getUserName();
-      const {success, message} = await generateTpinApi(tID, username, newUserInfo?.['Email Address'], );
+
+      const {success, message} = await generateTpinApi(
+        tID,
+        username,
+        newUserInfo?.['Email Address'],
+      );
 
       setIsLoading(false);
       if (success) {
@@ -173,39 +186,62 @@ const Form = () => {
         setFormError(message);
       }
     } else {
-      if (getValues().isEntire == '1') {
-        const userInfo = await getService(
-          languageTxt?.reactAsyncStorageKeys?.userInfo,
-        );
-        const newUserInfo = userInfo && JSON.parse(userInfo);
-        const accCode = await getAccCode();
-        const tID = `OECN_${accCode}_${moment().format('MMDDyyyy_HHmmss.ms')}`;
-        setTransactionID(tID);
-        setIsLoading(true);
-        setFormData(data);
-
-        const username = await getUserName();
-
-        const {success, message} = await generateTpinApi(tID, username, newUserInfo?.['Email Address'],);
-
-        setIsLoading(false);
-        if (success) {
-          setOtpRemainingTimeSec(180);
-          setStep(1);
-        } else {
-          setFormError(message);
-        }
-      } else {
-        setError('conversionAmount', {message: languageTxt.conversionAmountError,});
-        setConvertableAmountError(languageTxt.conversionAmountError);
-      }
+      setError('conversionAmount', {
+        message: languageTxt.conversionAmountError,
+      });
+      setConvertableAmountError(languageTxt.conversionAmountError);
     }
+
+    // if (
+    //   Number(getValues().conversionAmount || 0) >=
+    //     Number(minimunInvestmentAmountIn) &&
+    //   getValues().isEntire == '0'
+    // ) {
+    // } else {
+    //   if (getValues().isEntire == '1') {
+    //     const userInfo = await getService(
+    //       languageTxt?.reactAsyncStorageKeys?.userInfo,
+    //     );
+    //     const newUserInfo = userInfo && JSON.parse(userInfo);
+    //     const accCode = await getAccCode();
+    //     setAccountCode(`${accCode}`);
+    //     const tID = `OECN_${accCode}_${moment().format('MMDDyyyy_HHmmss.ms')}`;
+    //     setTransactionID(tID);
+    //     setIsLoading(true);
+    //     setFormData(data);
+
+    //     const username = await getUserName();
+
+    //     const {success, message} = await generateTpinApi(
+    //       tID,
+    //       username,
+    //       newUserInfo?.['Email Address'],
+    //     );
+
+    //     setIsLoading(false);
+    //     if (success) {
+    //       setOtpRemainingTimeSec(180);
+    //       setStep(1);
+    //     } else {
+    //       setFormError(message);
+    //     }
+    //   } else {
+    //     setError('conversionAmount', {
+    //       message: languageTxt.conversionAmountError,
+    //     });
+    //     setConvertableAmountError(languageTxt.conversionAmountError);
+    //   }
+    // }
   };
 
   const onSubmitVerifyTpin = async () => {
     setIsLoading(true);
     const username = await getUserName();
-    const {success, message} = await verifyTpinApi(transactionID, username, otp,);
+    const {success, message} = await verifyTpinApi(
+      transactionID,
+      username,
+      otp,
+    );
     setIsLoading(false);
     setErrorSnack(message);
     if (success) {
@@ -306,7 +342,9 @@ const Form = () => {
         }}
         isBottomNav={true}
         isLoading={isLoading || isLoadingFundsIn}
-        title={languageTxt?.reactStackKeys?.user?.eTransactions?.eConversion?.name}>
+        title={
+          languageTxt?.reactStackKeys?.user?.eTransactions?.eConversion?.name
+        }>
         <>
           <View style={styles.container}>
             <Tab value={index} disableIndicator>
@@ -314,15 +352,27 @@ const Form = () => {
                 title={languageTxt.conversionOut}
                 containerStyle={styles.containerTab}
                 TouchableComponent={TouchableOpacity}
-                buttonStyle={[ styles.buttonStyle, index === 0 ? styles.tabActive : {}, ]}
-                titleStyle={[ styles.tabTittle, index === 0 ? styles.tabTittleActive : {}, ]}
+                buttonStyle={[
+                  styles.buttonStyle,
+                  index === 0 ? styles.tabActive : {},
+                ]}
+                titleStyle={[
+                  styles.tabTittle,
+                  index === 0 ? styles.tabTittleActive : {},
+                ]}
               />
               <Tab.Item
                 title={languageTxt.conversionIn}
                 containerStyle={styles.containerTab}
                 TouchableComponent={TouchableOpacity}
-                buttonStyle={[ styles.buttonStyle, index === 1 || index === 2 ? styles.tabActive : {}, ]}
-                titleStyle={[styles.tabTittle, index === 1 || index === 2 ? styles.tabTittleActive : {},]}
+                buttonStyle={[
+                  styles.buttonStyle,
+                  index === 1 || index === 2 ? styles.tabActive : {},
+                ]}
+                titleStyle={[
+                  styles.tabTittle,
+                  index === 1 || index === 2 ? styles.tabTittleActive : {},
+                ]}
               />
             </Tab>
             {index === 0 ? (
@@ -380,7 +430,7 @@ const Form = () => {
                         Number(convertableUnits).toFixed(4),
                       )}`}
                       heading2={`${languageTxt.conversions} Amount`}
-                      description2={`${numberWithCommas(
+                      description2={`PKR ${numberWithCommas(
                         Number(convertableAmount).toFixed(2),
                       )}`}
                       requestedUnits={`${numberWithCommas(
@@ -507,9 +557,9 @@ const Form = () => {
                     }
                   }}
                   handleSecondaryOnPress={() =>
-                    navigation.navigate =(
+                    navigation.navigate(
                       // languageTxt?.reactStackKeys?.user?.eTransactions?.menus,
-                      languageTxt?.reactStackKeys?.user?.eTransactions?.name
+                      languageTxt?.reactStackKeys?.user?.eTransactions?.name,
                     )
                   }
                 />
@@ -571,7 +621,7 @@ const Form = () => {
                             Number(convertableUnitsIn).toFixed(4),
                           )}`}
                           heading2={`${languageTxt.conversions} Amount`}
-                          description2={`${numberWithCommas(
+                          description2={`PKR ${numberWithCommas(
                             Number(convertableAmountIn).toFixed(2),
                           )}`}
                           requestedUnits={`${numberWithCommas(
@@ -580,12 +630,12 @@ const Form = () => {
                           balanceUnits={`${numberWithCommas(
                             Number(balanceUnitsIn).toFixed(4),
                           )}`}
-                          minimunInvestmentAmount={`${numberWithCommas(
-                            Number(minimunInvestmentAmountIn).toFixed(2),
-                          )}`}
-                          minimunReInvestmentAmount={`${numberWithCommas(
-                            Number(minimunReInvestmentAmountIn).toFixed(2),
-                          )}`}
+                          // minimunInvestmentAmount={`${numberWithCommas(
+                          //   Number(minimunInvestmentAmountIn).toFixed(2),
+                          // )}`}
+                          // minimunReInvestmentAmount={`${numberWithCommas(
+                          //   Number(minimunReInvestmentAmountIn).toFixed(2),
+                          // )}`}
                         />
                       </>
                     )}
@@ -616,10 +666,10 @@ const Form = () => {
                       handleSecondaryOnPress={() => {
                         setConvertableAmountError('');
                         clearErrors();
-                        navigation.navigate=(
+                        navigation.navigate(
                           // languageTxt?.reactStackKeys?.user?.eTransactions?.menus,
                           languageTxt?.reactStackKeys?.user?.eTransactions
-                            ?.name
+                            ?.name,
                         );
                       }}
                     />
@@ -628,7 +678,7 @@ const Form = () => {
                   <View style={[styles.container, {padding: 30}]}>
                     <CustomTitle
                       title={'Enter 4-digit Pin'}
-                      fontSize={fontConstants.header}
+                      fontSize={fontConstants.large}
                       extraStyles={{paddingVertical: 20}}
                     />
                     <CodeFieldOTP
@@ -647,10 +697,10 @@ const Form = () => {
                       secondaryButtonText={languageTxt?.cancel}
                       handlePrimaryOnPress={onSubmitVerifyTpin}
                       handleSecondaryOnPress={() => {
-                        navigation.navigate = (
+                        navigation.navigate(
                           // languageTxt?.reactStackKeys?.user?.eTransactions?.menus,
                           languageTxt?.reactStackKeys?.user?.eTransactions
-                            ?.name
+                            ?.name,
                         );
                       }}
                     />
@@ -687,7 +737,7 @@ const Form = () => {
                     ) > 0
                       ? Number(formData.conversionAmount).toFixed(2)
                       : Number(formData.allConversionAmount).toFixed(2),
-                  )}`}
+                  )} (PKR)`}
                 />
 
                 <CustomDoubleButton
@@ -695,9 +745,9 @@ const Form = () => {
                   secondaryButtonText={languageTxt?.cancel}
                   handlePrimaryOnPress={onFormSubmit}
                   handleSecondaryOnPress={() => {
-                    navigation.navigate =(
+                    navigation.navigate(
                       // languageTxt?.reactStackKeys?.user?.eTransactions?.menus,
-                      languageTxt?.reactStackKeys?.user?.eTransactions?.name
+                      languageTxt?.reactStackKeys?.user?.eTransactions?.name,
                     );
                   }}
                 />
@@ -708,14 +758,17 @@ const Form = () => {
           <CustomModal
             open={conversionOutOpen}
             onRequestClose={() => setConversionOutOpen(false)}
-            title={languageTxt?.reactStackKeys?.user?.eTransactions?.eConversion?.name}
+            title={
+              languageTxt?.reactStackKeys?.user?.eTransactions?.eConversion
+                ?.name
+            }
             body={
               <FlatList
                 style={styles.flatListContainer}
                 data={convertionsOfFundsOut}
                 ListEmptyComponent={() => (
                   <View style={styles.noDataContainer}>
-                    <MaterialCommunityIcons 
+                    <MaterialCommunityIcons
                       name="alert"
                       size={dimensionConstants?.iconXXLarge}
                       color={colorConstants?.primary}
@@ -733,16 +786,34 @@ const Form = () => {
                     onPress={() => {
                       setFundsOut(element?.item?.fundName);
                       setValue('fundNameOut', element?.item?.fundName);
-                      setValue('fundOutUnitClass', element?.item?.fundClassType, );
+                      setValue(
+                        'fundOutUnitClass',
+                        element?.item?.fundClassType,
+                      );
                       setValue('fundOutUnitType', element?.item?.fundTypeName);
                       setValue('conversionAmount', '');
-                      setValue('allConversionAmount', element?.item?.convertableAmount,);
-                      setconvertableAmount(parseFloat(element?.item?.convertableAmount),);
-                      setconvertableUnits(parseFloat(element?.item?.convertableUnits),);
+                      setValue(
+                        'allConversionAmount',
+                        element?.item?.convertableAmount,
+                      );
+                      setconvertableAmount(
+                        parseFloat(element?.item?.convertableAmount) < 0
+                          ? 0
+                          : parseFloat(element?.item?.convertableAmount),
+                      );
+                      setconvertableUnits(
+                        parseFloat(element?.item?.convertableUnits) < 0
+                          ? 0
+                          : parseFloat(element?.item?.convertableUnits),
+                      );
                       setrequestedUnits(element?.item?.requestedUnits);
                       setbalanceUnits(element?.item?.balanceUnits);
-                      setminimunInvestmentAmount(element?.item?.minimunInvestmentAmount,);
-                      setminimunReInvestmentAmount(element?.item?.minimunReInvestmentAmount,);
+                      setminimunInvestmentAmount(
+                        element?.item?.minimunInvestmentAmount,
+                      );
+                      setminimunReInvestmentAmount(
+                        element?.item?.minimunReInvestmentAmount,
+                      );
                       clearErrors();
                       setConversionOutOpen(false);
                     }}>
@@ -756,7 +827,10 @@ const Form = () => {
           <CustomModal
             open={conversionInOpen}
             onRequestClose={() => setConversionInOpen(false)}
-            title={languageTxt?.reactStackKeys?.user?.eTransactions?.eConversion?.name}
+            title={
+              languageTxt?.reactStackKeys?.user?.eTransactions?.eConversion
+                ?.name
+            }
             body={
               <FlatList
                 style={styles.flatListContainer}
@@ -783,12 +857,24 @@ const Form = () => {
                       setValue('fundInUnitClass', element?.item?.fundClassType);
                       setValue('fundInUnitType', element?.item?.fundTypeName);
 
-                      setconvertableAmountIn(parseFloat(element?.item?.convertableAmount),);
-                      setconvertableUnitsIn(parseFloat(element?.item?.convertableUnits),);
+                      setconvertableAmountIn(
+                        parseFloat(element?.item?.convertableAmount) < 0
+                          ? 0
+                          : parseFloat(element?.item?.convertableAmount),
+                      );
+                      setconvertableUnitsIn(
+                        parseFloat(element?.item?.convertableUnits) < 0
+                          ? 0
+                          : parseFloat(element?.item?.convertableUnits),
+                      );
                       setrequestedUnitsIn(element?.item?.requestedUnits);
                       setbalanceUnitsIn(element?.item?.balanceUnits);
-                      setminimunInvestmentAmountIn(element?.item?.minimunInvestmentAmount,);
-                      setminimunReInvestmentAmountIn(element?.item?.minimunReInvestmentAmount,);
+                      setminimunInvestmentAmountIn(
+                        element?.item?.minimunInvestmentAmount,
+                      );
+                      setminimunReInvestmentAmountIn(
+                        element?.item?.minimunReInvestmentAmount,
+                      );
                       clearErrors();
                       setConversionInOpen(false);
                     }}>
@@ -806,9 +892,9 @@ const Form = () => {
               setMsgModal(false);
               setAlertTitle('');
               setAlertDescription('');
-              navigation.navigate =(
+              navigation.navigate(
                 // languageTxt?.reactStackKeys?.user?.eTransactions?.menus,
-                languageTxt?.reactStackKeys?.user?.eTransactions?.name
+                languageTxt?.reactStackKeys?.user?.eTransactions?.name,
               );
             }}
           />

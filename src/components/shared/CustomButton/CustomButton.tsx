@@ -34,7 +34,8 @@ const CustomButton = ({
       style={[
         styles(props).button,
         isDisabled && styles(props).disabled,
-        extraStyles]}
+        extraStyles,
+      ]}
       onPress={() => handleOnPress()}>
       {icon}
       <Text style={styles(props)?.title} numberOfLines={1}>

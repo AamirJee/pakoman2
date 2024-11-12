@@ -1,4 +1,4 @@
-import React, {useState,useContext} from 'react';
+import React, {useState} from 'react';
 import {Image, View} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
@@ -27,20 +27,18 @@ import CustomHandleTitle from '../../../shared/CustomHandleTitle';
 import CustomDoubleButton from '../../../shared/CustomDoubleButton';
 
 import LogoIcon from '../../../../assets/logo/logo.png';
-import CustomDoubleLoginButton from '../../../shared/CustomDoubleLoginButton';
 
 const Login = ({navigation}: any) => {
-  
-
   const [isLoading, setIsLoading] = useState(false);
   const [errorSnack, setErrorSnack] = useState('');
   const [formError, setFormError] = useState(null);
 
-  const {addAccCode, addUserProfile, }: any = useAuthentication();
+  const {addAccCode, addUserProfile}: any = useAuthentication();
+
   const [passwordStatus, setPasswordStatus] = useState(true);
+
   const loginMutation = useLogin();
-  
-  
+
   const {
     control,
     setError,
@@ -49,11 +47,8 @@ const Login = ({navigation}: any) => {
     formState: {errors},
   } = useForm({
     defaultValues: {
-      usernameold: 'Ejaz.awan',
-      passwordold: 'Ajazawan',
-      username: 'rusd.inv',
-      password: 'rusd.inv',
-
+      username: '',
+      password: '',
     },
     mode: 'onTouched',
   });
@@ -76,21 +71,13 @@ const Login = ({navigation}: any) => {
   };
 
   const onSuccessCb = async (data: any) => {
-  
     try {
       setIsLoading(false);
       if (data?.success) {
         addAccCode(data?.accCode);
         addUserProfile(data?.userProfile);
-        if(data?.userProfile?.['CLASS TYPE'] !== 'Professional')//Corporate
-        {
-          setIsLoading(false);
-          setFormError(languageTxt?.unAuthorized);
-          return
-        }
-            
+
         if (data?.code == '1') {
-          //console.log('Data :- ', languageTxt?.reactStackKeys?.user?.name)
           navigation.replace(languageTxt?.reactStackKeys?.user?.name);
         } else if (data?.code == '3') {
           navigation.replace(
@@ -237,8 +224,7 @@ const Login = ({navigation}: any) => {
             }}
           />
 
-          <CustomDoubleLoginButton
-            primaryExtraStyles
+          <CustomDoubleButton
             primaryButtonText={languageTxt?.login}
             secondaryButtonText={languageTxt?.registerNow}
             isDisabledPrimary={loginMutation?.isLoading}

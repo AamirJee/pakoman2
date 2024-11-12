@@ -22,8 +22,7 @@ const CustomModal = ({
       animationType="fade"
       transparent={true}
       visible={open}
-      onRequestClose={onRequestClose}
-      >
+      onRequestClose={onRequestClose}>
       <View style={styles({bottom}).container}>
         <View style={styles({bottom}).modalView}>
           {closeButton && (

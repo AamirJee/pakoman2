@@ -19,13 +19,11 @@ const CustomTitle = ({
   fontWeight,
   numberOfLines,
   extraStyles,
-  
 }: CustomTitleInterface) => {
   const props = {
     fontWeight,
     fontSize,
     titleColor,
-    
   };
   return (
     <Text
@@ -42,8 +40,6 @@ CustomTitle.propTypes = {
   numberOfLines: PropTypes.number,
   fontWeight: PropTypes.oneOf(fontWeightArray),
   fontSize: PropTypes.oneOf(fontSizeArray),
-  
-  
 };
 
 CustomTitle.defaultProps = {
@@ -52,7 +48,6 @@ CustomTitle.defaultProps = {
   fontWeight: fontConstants?.fontWeightBold,
   fontSize: fontConstants?.middle,
   numberOfLines: 30,
-  
 };
 
 export default CustomTitle;

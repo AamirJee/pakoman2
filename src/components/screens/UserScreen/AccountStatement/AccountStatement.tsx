@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState} from 'react';
 import {Alert, PermissionsAndroid, Platform, View} from 'react-native';
 import {Controller, useForm} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
@@ -9,7 +9,6 @@ import {languageTxt} from '../../../../utils/constants/languageTxt';
 import {fontConstants} from '../../../../utils/constants/fontConstants';
 import {colorConstants} from '../../../../utils/constants/colorConstants';
 import {dimensionConstants} from '../../../../utils/constants/dimensionConstants';
-import { useAuthentication} from '../../../../utils/globalHooks';
 import {
   useGenerateAccountStatment,
   useSendAccountStatmentEmail,
@@ -44,20 +43,6 @@ const AccountStatement = () => {
 
   const navigation = useNavigation();
   const generateAccountStatmentMutation = useGenerateAccountStatment();
-  
-  const [mngmntCompany, setMngmntCompany] = useState('');
-  const [bgColor, setBgColor] = useState('');
-  const { data: authData }: any = useAuthentication();
-
-  useEffect(() => {
-    if (authData?.userProfile) 
-      console.log('Custom Fund Card', authData?.userProfile?.['MNGMNT COMPANY'])
-    setMngmntCompany(authData?.userProfile?.['MNGMNT COMPANY']);
-    let backgrndColor = mngmntCompany == 'RUSD Capital' ? colorConstants.primary : colorConstants.primaryB
-    setBgColor(backgrndColor)
-    console.log('Background Color Account Statement : ', bgColor)
-  }, [bgColor]);
-
 
   const {
     control,
@@ -145,7 +130,7 @@ const AccountStatement = () => {
       if (data.success) {
         setMsgModal(true);
         setAlertTitle(languageTxt.emailMsg);
-        setAlertDescription(data?.message);
+        setAlertDescription('');
       } else {
         setMsgModal(true);
         setAlertTitle(languageTxt.error_title);
@@ -169,13 +154,12 @@ const AccountStatement = () => {
       <Skeleton
         title={languageTxt?.reactStackKeys?.user?.accountStatement?.name}
         isLoading={isLoading}
-        bgColor={bgColor}
         isBottomNav={true}
         isBack={false}>
         <>
           <CustomTitle
             title={`${languageTxt?.reactStackKeys?.user?.accountStatement?.name} Request`}
-            titleColor= {bgColor}//{colorConstants?.drakGray}
+            titleColor={colorConstants?.drakGray}
             fontWeight={fontConstants?.fontWeight600}
             fontSize={fontConstants?.header}
             extraStyles={{
@@ -304,7 +288,6 @@ const AccountStatement = () => {
               }}
             />
             <CustomButton
-              backgroundColor={bgColor}
               buttonText={languageTxt?.generateReport}
               isDisabled={generateAccountStatmentMutation?.isLoading}
               handleOnPress={handleSubmit(onSubmit)}

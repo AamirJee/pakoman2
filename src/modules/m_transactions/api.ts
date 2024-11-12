@@ -7,7 +7,6 @@ import {
   storeService,
 } from '../../config/asyncStorage/asynDataStore';
 import {getAccCode, getUserName} from '../../config/asyncStorage/acc_code';
-
 import {
   transformDataInfo,
   transformChartInfo,
@@ -18,14 +17,12 @@ import {
   transformAllowedTransactionTypes,
   transformInvestmentInfo,
   transformInvestmentPendingFunds,
-  transformGetServiceFee,
-  transformGetAllMgmtCompanies,
+  transformPoliciesInfo,
 } from './transformer';
 
 const M_TRANSACTIONS_API_KEY = '5a64df56-rt45-yu41-8974-5f64ad56f4a5';
 
 const getPageApi = async () => {
-  //console.log('getPageApi')
   return mTransactions_instance({
     method: 'post',
     headers: {
@@ -57,7 +54,6 @@ const getPageApi = async () => {
 };
 
 const getDashboardUserInfoApi = async (accCode: any) => {
-  ///console.log('getDashboardUserInfoApi', accCode)
   return mTransactions_instance({
     method: 'post',
     headers: {
@@ -84,7 +80,7 @@ const getDashboardUserInfoApi = async (accCode: any) => {
         ]?.[0]?.['DashboardUserInfoResult']?.[0]?.['diffgr:diffgram']?.[0]?.[
           'NewDataSet'
         ]?.[0]?.['Table']?.[0];
-        
+
       newData = transformDataInfo(newData);
       storeService(languageTxt?.reactAsyncStorageKeys?.userInfo, newData);
 
@@ -103,7 +99,6 @@ const getDashboardUserInfoApi = async (accCode: any) => {
 
 const getDashboardChartInfoApi = async () => {
   const accCode = await getAccCode();
- 
   return mTransactions_instance({
     method: 'post',
     headers: {
@@ -304,7 +299,7 @@ const getRedemptionInfoApi = async () => {
     });
 };
 
-const getInvestmentInfoApi = async () => {  
+const getInvestmentInfoApi = async () => {
   const accCode = await getAccCode();
   const IsTrxFunds = 1;
   return mTransactions_instance({
@@ -339,7 +334,6 @@ const getInvestmentInfoApi = async () => {
 
       let newArray = [];
       newArray = transformInvestmentInfo(newData || []);
-     // newArray = transformConvertionsOfFunds(newData || []);
       return {
         success: true,
         data: newArray,
@@ -361,8 +355,6 @@ const saveInvestmentTransactionApi = async (
   fundUnitType: string,
   investAmount: string,
   investBy: string,
-  comments: string, 
-  amountExistFund:string, 
 ) => {
   const accCode = await getAccCode();
   const userID = await getUserName();
@@ -409,12 +401,6 @@ const saveInvestmentTransactionApi = async (
           <Rebate>' +
       rebate +
       '</Rebate>\
-          <Comments>' +
-      comments +
-      '</Comments>\
-      <AmountExistFund>' +
-      amountExistFund +
-      '</AmountExistFund>\
       </SaveInvestmentTransaction>\
       </soap:Body>\
     </soap:Envelope>',
@@ -1096,14 +1082,7 @@ const getUOSAlertApi = async () => {
       };
     });
 };
-const updateUOSAlertApi = async (
-  investmentEmail: string,
-  redemptionEmail: string,
-  conversionEmail: string,
-  investmentSMS: string,
-  redemptionSMS: string,
-  conversionSMS: string,
-) => {
+const updateUOSAlertApi = async (apiData: string) => {
   const accCode = await getAccCode();
   const userID = await getUserName();
   return mTransactions_instance({
@@ -1123,26 +1102,9 @@ const updateUOSAlertApi = async (
       '</AccCode>\
           <UserID>' +
       userID +
-      '</UserID>\
-          <InvestmentEmail>' +
-      investmentEmail +
-      '</InvestmentEmail>\
-           <RedemptionEmail>' +
-      redemptionEmail +
-      '</RedemptionEmail>\
-           <ConversionEmail>' +
-      conversionEmail +
-      '</ConversionEmail>\
-           <InvestmentSMS>' +
-      investmentSMS +
-      '</InvestmentSMS>\
-           <RedemptionSMS>' +
-      redemptionSMS +
-      '</RedemptionSMS>\
-           <ConversionSMS>' +
-      conversionSMS +
-      '</ConversionSMS>\
-      </UpdateUOSAlert>\
+      '</UserID>' +
+      apiData +
+      '</UpdateUOSAlert>\
       </soap:Body>\
     </soap:Envelope>',
   })
@@ -1226,144 +1188,35 @@ const getAllowedTransactionTypesApi = async () => {
     });
 };
 
-
-const getServiceFeeApi = async (  
-  productID: string,
-  requestedAmount:string,
-) => {  
-  //  productID='888963e6-8398-4840-937c-44da5e1423dc',
-  //  requestedAmount='888963e6-8398-4840-937c-44da5e1423dc',
+const getGetPoliciesApi = async () => {
   return mTransactions_instance({
     method: 'post',
     headers: {
-      SOAPAction: 'http://www.sidathyder.com.pk/GetServiceFee',
+      SOAPAction: 'http://www.sidathyder.com.pk/GetPolicies',
     },
     data:
       '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
       <soap:Body>\
-        <GetServiceFee xmlns="http://www.sidathyder.com.pk/">\
+        <GetPolicies xmlns="http://www.sidathyder.com.pk/">\
           <AccessKey>' +
       M_TRANSACTIONS_API_KEY +
       '</AccessKey>\
-      <ProductCode>' +
-      productID +
-      '</ProductCode>\
-      <RequestedAmount>' +
-      requestedAmount +
-      '</RequestedAmount>\
-      </GetServiceFee>\
-      </soap:Body>\
-    </soap:Envelope>',
-  })
-  .then((data: any) => {
-    //console.log('Result ', data)
-    var newData =
-      data?.['soap:Envelope']?.['soap:Body']?.[0]?.[
-        'GetServiceFeeResponse'
-      ]?.[0]?.['GetServiceFeeResult']?.[0]?.['diffgr:diffgram']?.[0]?.[
-        'NewDataSet'
-      ]?.[0]?.['DataResponse'];
-
-    let newArray: [];
-    newArray = transformGetServiceFee(newData || []);  
-    return {
-      success: true,
-      data: newArray,
-    };
-  })
-  .catch(err => {
-    return {
-      success: false,
-      message: err?.message,
-    };
-  });
-};
-
-const getBackendLoadApi = async (
-  productCode: any,  
-) => {
-  return mTransactions_instance({
-    method: 'post',
-    headers: {
-      SOAPAction: 'http://www.sidathyder.com.pk/GetBackendLoad',
-    },
-    data:
-      '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
-      <soap:Body>\
-        <GetBackendLoad xmlns="http://www.sidathyder.com.pk/">\
-        <AccessKey>' +
-      M_TRANSACTIONS_API_KEY +
-      '</AccessKey>\
-      <ProductCode>' +
-      productCode +
-      '</ProductCode>\
-      </GetBackendLoad>\
-      </soap:Body>\
-    </soap:Envelope>',
-  })
-    .then(async (data: any) => {
-      var resultCode =
-        data?.['soap:Envelope']?.['soap:Body']?.[0]?.[
-          'GetBackendLoadResponse'
-        ]?.[0]?.['GetBackendLoadResult']?.[0];
-      let message = '';
-      let success = false;
-      if (resultCode == '0') {
-        success = true;
-        message = 'Backend load sent ';
-      } else if (resultCode == '-1') {
-        message = 'Invalid Access Key';
-      } 
-      else {
-        message = resultCode;
-      }
-
-      return {
-        success: success,
-        message: message,
-      };
-    })
-    .catch(err => {
-      return {
-        success: false,
-        message: err?.message,
-      };
-    });
-};
-
- 
-const getAllMgmtCompaniesApi = async () => {  
-  //console.log('getAllMgmtCompaniesApi Func', getAllMgmtCompaniesApi)
-  return mTransactions_instance({
-    method: 'post',
-    headers: {
-      SOAPAction: 'http://www.sidathyder.com.pk/GetAllMgmtCompanies',
-    },
-    data:
-      '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
-      <soap:Body>\
-        <GetAllMgmtCompanies xmlns="http://www.sidathyder.com.pk/">\
-          <AccessKey>' +
-      M_TRANSACTIONS_API_KEY +
-      '</AccessKey>\
-      </GetAllMgmtCompanies>\
+        </GetPolicies>\
       </soap:Body>\
     </soap:Envelope>',
   })
     .then((data: any) => {
       var newData =
         data?.['soap:Envelope']?.['soap:Body']?.[0]?.[
-          'GetAllMgmtCompaniesResponse'
-        ]?.[0]?.['GetAllMgmtCompaniesResult']?.[0]?.['diffgr:diffgram']?.[0]?.[
+          'GetPoliciesResponse'
+        ]?.[0]?.['GetPoliciesResult']?.[0]?.['diffgr:diffgram']?.[0]?.[
           'NewDataSet'
         ]?.[0]?.['DataResponse'];
 
-      let newArray = [];
-      newArray = transformGetAllMgmtCompanies(newData || []);
-     // newArray = transformConvertionsOfFunds(newData || []);
+      newData = transformPoliciesInfo(newData);
       return {
         success: true,
-        data: newArray,
+        data: newData,
       };
     })
     .catch(err => {
@@ -1373,8 +1226,6 @@ const getAllMgmtCompaniesApi = async () => {
       };
     });
 };
- 
-
 
 export {
   getPageApi,
@@ -1396,7 +1247,5 @@ export {
   updateUOSAlertApi,
   getAllowedTransactionTypesApi,
   sendAccountStatmentEmailApi,
-  getServiceFeeApi,
-  getBackendLoadApi,
-  getAllMgmtCompaniesApi,
+  getGetPoliciesApi,
 };

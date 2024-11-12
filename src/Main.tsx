@@ -4,7 +4,6 @@ import {QueryClient, QueryClientProvider} from 'react-query';
 import AuthenticationProvider from './utils/AuthenticationProvider';
 import App from './App';
 
-
 const queryClient = new QueryClient();
 
 const Main = () => {

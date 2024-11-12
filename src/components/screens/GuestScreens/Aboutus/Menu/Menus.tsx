@@ -35,7 +35,7 @@ const Menus = () => {
       ),
     },
     {
-      title: languageTxt?.reactStackKeys?.guest?.aboutus?.whistleBlower,
+      title: languageTxt?.reactStackKeys?.guest?.aboutus?.policies,
       icon: (
         <MaterialCommunityIcons
           name="format-list-text"
@@ -47,7 +47,6 @@ const Menus = () => {
   ];
 
   const renderCard = (item: any) => {
-    console.log('ITEM:-', item)
     return (
       <CustomMenuCard
         title={item?.title}
@@ -61,7 +60,6 @@ const Menus = () => {
 
   return (
     <Skeleton
-      
       isBack={false}
       isScroll={false}
       isBottomNav={true}

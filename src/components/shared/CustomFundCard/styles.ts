@@ -46,15 +46,4 @@ export const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
   },
-  textBalContainer: {
-    flex:1,
-    flexDirection : 'row',
-    alignContent:'center',
-    alignItems: 'center', 
-    marginLeft:dimensionConstants.marginXSmall,
-    marginBottom:dimensionConstants.marginXSmall,
-  },
-  lineBreak: {
-    margin: dimensionConstants.marginSmall,
-  },
 });

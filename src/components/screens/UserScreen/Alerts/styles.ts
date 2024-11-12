@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
   container: {
     padding: dimensionConstants.paddingLarge,
     marginTop: dimensionConstants.paddingMiddle,
-
   },
   itemContainer: {
     flexDirection: 'row',

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {View} from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -8,7 +8,6 @@ import {languageTxt} from '../../../utils/constants/languageTxt';
 import {CustomFundCardInterface} from './CustomFundCard.interface';
 import {fontConstants} from '../../../utils/constants/fontConstants';
 import {colorConstants} from '../../../utils/constants/colorConstants';
-import { useAuthentication} from '../../../utils/globalHooks';
 
 import CustomTitle from '../CustomTitle';
 
@@ -27,47 +26,24 @@ const CustomFundCard = ({
   heading4,
   description4,
 }: CustomFundCardInterface) => {
-
-  const [mngmntCompany, setMngmntCompany] = useState('');
-  const [bgColor, setBgColor] = useState('');
-  const { data: authData }: any = useAuthentication();
-  
-  useEffect(() => {
-    if (authData?.userProfile)
-      console.log('Custom Fund Card', authData?.userProfile?.['MNGMNT COMPANY'])
-      setMngmntCompany(authData?.userProfile?.['MNGMNT COMPANY']);
-      let backgrndColor = mngmntCompany === 'RUSD Capital' ? '#374265' : '#60975c'
-      setBgColor(backgrndColor)
-  }, [bgColor]);
-
-  
   return (
-    <View style={[styles.container,{backgroundColor:bgColor}]}>
-      <View style={[styles.headerContainer,{backgroundColor:bgColor}]}>
-        <CustomTitle title={title} 
-        fontWeight={fontConstants.fontWeight600}
-        titleColor={mngmntCompany === 'RUSD Capital' ? colorConstants.white : 'white'}
-        />
+    <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <CustomTitle title={title} extraStyles={styles.title} />
       </View>
       <View style={styles.bodyContainer}>
         <View style={styles.subBodyContainer}>
-          <CustomTitle title={heading1} 
-          titleColor={mngmntCompany === 'RUSD Capital' ? colorConstants.white : 'white'}
-          extraStyles={[styles.header]} />
+          <CustomTitle title={heading1} extraStyles={styles.header} />
           <CustomTitle
             title={`${description1}`}
-            titleColor={mngmntCompany === 'RUSD Capital' ? colorConstants.white : 'white'}
             extraStyles={styles.description}
           />
         </View>
         <View style={styles.subBodyContainer}>
-          <CustomTitle title={heading2} 
-          titleColor={mngmntCompany === 'RUSD Capital' ? colorConstants.white : 'white'}
-          extraStyles={styles.header} />
+          <CustomTitle title={heading2} extraStyles={styles.header} />
           <CustomTitle
-            title={`${description2}`}              
-            fontWeight={fontConstants.fontWeight600}
-            titleColor={mngmntCompany === 'RUSD Capital' ? colorConstants.white : 'white'}
+            title={`${description2}`}
+            extraStyles={styles.description}
           />
         </View>
       </View>
@@ -76,23 +52,20 @@ const CustomFundCard = ({
           <View style={styles.subBodyContainer}>
             <CustomTitle
               title={'Minimum Investment'}
-              extraStyles={styles.header}
-              titleColor={mngmntCompany === 'RUSD Capital' ? colorConstants.white : 'white'}
+              extraStyles={[styles.header, {color: colorConstants.primary}]}
             />
             <CustomTitle
-              title={`${minimunInvestmentAmount}`}
+              title={`PKR ${minimunInvestmentAmount}`}
               extraStyles={styles.description}
-              titleColor={mngmntCompany === 'RUSD Capital' ? colorConstants.white : 'white'}
             />
           </View>
           <View style={styles.subBodyContainer}>
             <CustomTitle
               title={'Minimum Re-Investment'}
-              extraStyles={styles.header}
-              titleColor={mngmntCompany === 'RUSD Capital' ? colorConstants.white : 'white'}
+              extraStyles={[styles.header, {color: colorConstants.primary}]}
             />
             <CustomTitle
-              title={`${minimunReInvestmentAmount}`}
+              title={`PKR ${minimunReInvestmentAmount}`}
               extraStyles={styles.description}
             />
           </View>
@@ -100,7 +73,7 @@ const CustomFundCard = ({
       )}
       {requestedUnits && balanceUnits && (
         <View style={styles.bottomContainer}>
-          {/* <View style={styles.textContainer}>
+          <View style={styles.textContainer}>
             <CustomTitle
               title={languageTxt.reqUnits}
               fontSize={fontConstants.small}
@@ -109,52 +82,42 @@ const CustomFundCard = ({
               title={`${requestedUnits}`}
               fontSize={fontConstants.small}
               fontWeight={fontConstants.fontWeight600}
-              titleColor={mngmntCompany === 'RUSD Capital' ? colorConstants.white : 'white'}
+              titleColor={colorConstants?.secondaryLight}
             />
-          </View> */}
-          <View style={styles.lineBreak}></View>
-          <View style={styles.textBalContainer}>
+          </View>
+          <View style={styles.textContainer}>
             <CustomTitle
-              title={languageTxt.existingFundAvailable}
+              title={languageTxt.balUnits}
               fontSize={fontConstants.small}
-              titleColor={colorConstants?.white}
             />
             <CustomTitle
               title={`${balanceUnits}`}
               fontSize={fontConstants.small}
               fontWeight={fontConstants.fontWeight600}
-              titleColor={colorConstants.white }
+              titleColor={colorConstants?.secondaryLight}
             />
           </View>
         </View>
       )}
 
-      { description4 && (
-        <View style={styles.textBalContainer}>
-          {/* <View style={styles.textBalContainer}>
-            <CustomTitle 
-            title={`${heading3}`} 
-            fontSize={fontConstants.small} 
-            titleColor={colorConstants.white}
-            />
+      {description3 && description4 && (
+        <View style={styles.bottomContainer}>
+          <View style={styles.textContainer}>
+            <CustomTitle title={`${heading3}`} fontSize={fontConstants.small} />
             <CustomTitle
               title={`${description3}`}
               fontSize={fontConstants.small}
               fontWeight={fontConstants.fontWeight600}
-              titleColor={colorConstants.white}
+              titleColor={colorConstants?.secondaryLight}
             />
-          </View> */}
-          <View style={styles.textBalContainer}>
-            <CustomTitle 
-            title={`${heading4}`} 
-            fontSize={fontConstants.small} 
-            titleColor={colorConstants.white}
-            />
+          </View>
+          <View style={styles.textContainer}>
+            <CustomTitle title={`${heading4}`} fontSize={fontConstants.small} />
             <CustomTitle
               title={`${description4}`}
               fontSize={fontConstants.small}
               fontWeight={fontConstants.fontWeight600}
-              titleColor={colorConstants.white}
+              titleColor={colorConstants?.secondaryLight}
             />
           </View>
         </View>

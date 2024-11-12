@@ -19,7 +19,6 @@ export const languageTxt: any = {
         individualInvestor: 'Individual Investor',
         pensionInvestor: 'Pension Investor',
         sahulatSarmayakari: 'Sahulat Sarmayakari',
-        managementCompanies: 'Management Companies'
       },
     },
     guest: {
@@ -29,7 +28,8 @@ export const languageTxt: any = {
         menus: 'About us Menus',
         whoWeAre: 'Who We Are',
         codeofConduct: 'Code Of Conduct',
-        whistleBlower: 'Whistle Blower',
+        policies: 'Policies',
+        policyDetail: 'Policy Detail',
       },
       whatWeDo: {
         name: 'What We Do',
@@ -114,6 +114,20 @@ export const languageTxt: any = {
     profile: 'Personal Information',
   },
   reactQueryKeys: {
+    pakoman: {
+      whoWeAre: 'whoWeAre',
+      companyInformation: 'companyInformation',
+      acf: 'acf',
+      poif: 'poif',
+      asye: 'asye',
+      poaaaf: 'poaaaf',
+      ahys: 'ahys',
+      shariahCompliantSolutions: 'shariahCompliantSolutions',
+      poaiif: 'poaiif',
+      poiaaf: 'poiaaf',
+      poddf: 'poddf',
+      portfolioManagement: 'portfolioManagement',
+    },
     dashboard: {
       mappedAccount: 'mappedAccount',
       chartInfo: 'chartInfo',
@@ -177,7 +191,6 @@ export const languageTxt: any = {
   emailPatternError: 'Invalid email address',
   invalidUsernameOrPassword: 'Invalid credentials!',
   tryAgainLater: 'Could not post at this time. Try again later.',
-  unAuthorized: 'User does not belongs to Professioinal Classification',
 
   // InputPlaceholder
   txtUserName: 'Username',
@@ -233,15 +246,12 @@ export const languageTxt: any = {
   register: 'Register',
   cancel: 'Cancel',
 
-  selectYourManangementCompany: 'Select Your Management Company',
   selectYourInvestmentType: 'Select Your Investment Type',
   servicesRequestFormForCorporateInvestors:
     'Services Request Form For Corporate Investors',
   sahulatSarmayakariAccountCap: 'SAHULAT SARMAYAKARI ACCOUNT',
 
-  welcomeMsgPakOman: 'Welcome to Pak Oman Digital Sigin in your account',
-  welcomeMsg: 'Welcome to Rusd Digital Sigin in your account',
-
+  welcomeMsg: 'Welcome to Pak Oman Digital Sigin in your account',
   onlineServicesRequest: 'Online Services Request',
   investorWelcome:
     'Welcome to Online Service Registration for PakOman Investments.',
@@ -261,13 +271,12 @@ export const languageTxt: any = {
     'Manage the investment of your Corporate Funds. From cash management to long term investments, we have options that are best suited to your institutional needs.',
   individualInvestorTitle: 'Individual Investor',
   individualInvestorDetail:
-    'Manage your own Savings and Investments. The broad array of investment options offered by AGIML cover multiple risk/return profiles to enable you to make an investment appropriate for your needs.',
+    'Manage your own Savings and Investments. The broad array of investment options offered by POAMCL cover multiple risk/return profiles to enable you to make an investment appropriate for your needs.',
   pensionInvestorTitle: 'Pension Investor',
   pensionInvestorDetail:
     'Manage your employee retirement funds and endowment plans with confidence through our professional advisory services and wide product range.',
 
   // ETransactions
-  eTransactionsDeclaration0: 'All investments in funds are subject to applicable fees and other charges.',
   eTransactionsDeclaration1: 'I/We, the undersigned, hereby declare that:',
   eTransactionsDeclaration2:
     'I acknowledge having read and understood the e-transact Terms and Conditions and agree to be bound by whatever written in the e-transact Terms and Conditions.',
@@ -281,9 +290,6 @@ export const languageTxt: any = {
     'I understand that redemption / conversion of units transaction may be subject to capital gain tax in accordance with the requirements of Income Tax Ordinance, 2001 applicable in Pakistan and the directives issued by Federal Board of Revenue (FBR) from time to time;',
   eTransactionsDeclaration7:
     'I understand that once the redemption / conversion request has been received through e-transact by Pak Oman Asset Management Company Limited, it cannot be cancelled/altered.',
-
-
-
 
   generateReport: 'Generate Report',
 
@@ -313,37 +319,16 @@ export const languageTxt: any = {
   addRequest: 'Add Request',
   sendRequest: 'Send Request',
   verifyOTP: 'Verify OTP',
-  existingFundAvailable: 'Existing Fund Available ',
 
-  //Aamir 09May
-  subscriptionAmount: 'Enter Subscription Amount for Investment',
-  basdAmount: 'Amount based on Existing Fund',
-  participationAmount:'New Participation Amount',
-  requestedAmount:'Requested Amount',
-  nonParkingFund:'Subscription Fund Selection',
-  frontendLoad:'Request to waive FEL%',
-  backendLoad: 'Applicable Backend Load %',
-  serviceFee: 'Service Fee',
-  managementCompany: 'Management Company',
-
-  
-  conversionAmountError: 'By Amount less then Min Investment Amount',
+  conversionAmountError: 'By Amount Greater Than Conversion Amount',
+  // conversionAmountError: 'By Amount less then Minimum Investment Amount',
+  conversionReAmountError: 'By Amount less then Minimum Re-Investment Amount',
   txtFundsError: 'Please select the fund name',
   txtProductNameError: 'Product Name is required',
   txtRedeemUnitsError: 'Redeem Units is required',
   txtRedeemAmountError: 'Redeem Amount is required',
   txtInvestmentAmountError: 'Investment Amount is required',
   txtConversionAmountError: 'Conversion Amount is required',
-  txtManagementCompanyError: 'Please select the fund name',
-
-  
-  txtSubscriptionAmountError: 'Subscription Amount is required',
-  txtBasdAmountError: 'Basd Amount is required',
-  txtParticipationAmountError: 'Participation Amount is required',
-  txtFrontendLoadError: 'Frontend Load Amount is required',
-  txtBackLoadError: 'Backend Load Amount is required',
-  txtserviceFeeError: 'Service Fee Value  is required',
-  
   conversions: 'Conversions',
   conversionOut: 'Conversion Out',
   conversionIn: 'Conversion In',
@@ -362,9 +347,7 @@ export const languageTxt: any = {
   saveChanges: 'Save Changes',
   Cheque: 'Cheque',
   DemandDraft: 'Demand Draft',
-  BankTransfer: 'BankTransfer',
-  PlaceinParkingAccount: 'PlaceinParkingAccount',
-
+  BankTransfer: 'Bank Transfer',
   ok: 'OK',
   submittedMsg: 'Transaction Submitted',
   emailMsg: 'Email successfully sent',

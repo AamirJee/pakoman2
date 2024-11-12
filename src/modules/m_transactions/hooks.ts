@@ -18,12 +18,10 @@ import {
   getInvestmentInfoApi,
   saveInvestmentTransactionApi,
   sendAccountStatmentEmailApi,
-  getServiceFeeApi,
-  getAllMgmtCompaniesApi,
+  getGetPoliciesApi,
 } from './api';
 
 const useDashboardChartInfo = (initialData: any = undefined) => {
-  
   return useQuery(
     languageTxt?.reactQueryKeys?.dashboard?.chartInfo,
     () => getDashboardChartInfoApi,
@@ -64,7 +62,7 @@ const useGenerateAccountStatment = () => {
 
 const useSendAccountStatmentEmail = () => {
   const queryClient = useQueryClient();
-  
+
   queryClient.setMutationDefaults(
     languageTxt?.reactQueryKeys?.sendAccountStatmentEmail,
     {
@@ -83,9 +81,8 @@ const useSendAccountStatmentEmail = () => {
         if (context.onErrorCb) {
           context.onErrorCb(error);
         }
-      },    
+      },
     },
-    
   );
 
   return useMutation(languageTxt?.reactQueryKeys?.sendAccountStatmentEmail);
@@ -103,8 +100,7 @@ const useRedemptionInfo = (initialData: any = undefined) => {
 };
 
 const useInvestmentInfo = (initialData: any = undefined) => {
-  //console.log('useInvestmentInfo')
-  return useQuery( 
+  return useQuery(
     languageTxt?.reactQueryKeys?.eTransactions?.investmentInfo,
     () => getInvestmentInfoApi,
     {
@@ -194,8 +190,6 @@ const useSaveInvestmentTransaction = () => {
       fundUnitType,
       investAmount,
       investBy,
-      comments,
-      amountExistFund, 
     }) =>
       saveInvestmentTransactionApi(
         tranDate,
@@ -205,8 +199,6 @@ const useSaveInvestmentTransaction = () => {
         fundUnitType,
         investAmount,
         investBy,
-        comments,
-        amountExistFund, 
       ),
     onMutate: async variables => {
       const {onSuccessCb, onErrorCb} = variables;
@@ -358,7 +350,6 @@ const useGetUOSAlert = (initialData: any = undefined) => {
 };
 
 const useGetAllowedTransactionTypes = (initialData: any = undefined) => {
-
   return useQuery(
     languageTxt?.reactQueryKeys?.allowedTransactionTypes,
     () => getAllowedTransactionTypesApi,
@@ -369,46 +360,16 @@ const useGetAllowedTransactionTypes = (initialData: any = undefined) => {
   );
 };
 
-
-const useGetServiceFee = () => {
-  const queryClient = useQueryClient();
-  
-  queryClient.setMutationDefaults('getServiceFee', {
-    mutationFn: ({productID, requestedAmount}) =>
-    getServiceFeeApi(productID, requestedAmount),
-    onMutate: async variables => {
-      const {onSuccessCb, onErrorCb} = variables;
-      return {onSuccessCb, onErrorCb};
-    },
-    onSuccess: (result, variables, context) => {
-      if (context.onSuccessCb) {
-        context.onSuccessCb(result);
-      }
-    },
-    onError: (error, variables, context) => {
-      if (context.onErrorCb) {
-        context.onErrorCb(error);
-      }
-    },
-  });
-  return useMutation('getServiceFee');
-};
-
-
-const useManagementComanies = (initialData: any = undefined) => {
-  //console.log('useManagementComanies',  languageTxt?.reactQueryKeys?.allowedTransactionTypes,)
-  return useQuery( 
-    'useManagementComanies',
-    //languageTxt?.reactQueryKeys?.register?.managementCompanies,
-    () => getAllMgmtCompaniesApi,
+const usePoliciesInfo = (initialData: any = undefined) => {
+  return useQuery(
+    languageTxt?.reactQueryKeys?.dashboard?.chartInfo,
+    () => getGetPoliciesApi(),
     {
       select: data => data,
       initialData,
     },
   );
 };
-
-
 
 export {
   useDashboardChartInfo,
@@ -427,6 +388,5 @@ export {
   useGetUOSAlert,
   useGetAllowedTransactionTypes,
   useSendAccountStatmentEmail,
-  useGetServiceFee,
-  useManagementComanies,
+  usePoliciesInfo,
 };

@@ -1,19 +1,15 @@
 // import {MOBILE_INTEGRATION_API_KEY} from '@env';
 import {mobile_integration_instance} from '../../config/http';
-
 import {
   getAccCode,
   getUserName,
   storeAccCode,
   storeUserName,
 } from '../../config/asyncStorage/acc_code';
-
 import {getDashboardUserInfoApi} from '../m_transactions/api';
 
 const MOBILE_INTEGRATION_API_KEY = '8b5844dc-d2bd-4d37-9227-51b334a936cc';
-
 const loginApi = async (username: string, password: string) => {
-
   storeUserName(username);
   var newPassword = password.split('');
 
@@ -23,7 +19,6 @@ const loginApi = async (username: string, password: string) => {
       key,
     )}</char>`;
   });
-  //call url 
   return mobile_integration_instance({
     method: 'post',
     headers: {
@@ -342,7 +337,6 @@ const signUpCorporateApi = async (
 };
 
 const getMappedAccountApi = async (username: string) => {
-
   return mobile_integration_instance({
     method: 'post',
     headers: {
@@ -570,7 +564,6 @@ const forgetPasswordApi = async (userName: string, cnic: string) => {
 
 const changePasswordApi = async (oldPassword: string, newPassword: string) => {
   const userName = await getUserName();
-  //console.log(oldPassword, newPassword, userName);
   return mobile_integration_instance({
     method: 'post',
     headers: {

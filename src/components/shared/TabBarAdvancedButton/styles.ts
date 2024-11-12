@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
   container: {
     position: 'relative',
     alignItems: 'center',
-    
   },
   button: {
     top: -30,

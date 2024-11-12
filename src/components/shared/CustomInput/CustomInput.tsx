@@ -6,6 +6,7 @@ import {TextInput, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import {CustomInputInterface} from './CustomInput.interface';
 import ValidationMessage from '../ValidationMessage';
+import {colorConstants} from '../../../utils/constants/colorConstants';
 
 const autoCapitalizeArray = ['characters', 'none', 'sentences', 'words'];
 const keyboardTypeArray = [
@@ -73,6 +74,7 @@ const CustomInput = ({
             )}
             <TextInput
               placeholder={placeHolder}
+              placeholderTextColor={colorConstants.lightGray}
               value={value}
               editable={!disabled}
               selectTextOnFocus={!disabled}

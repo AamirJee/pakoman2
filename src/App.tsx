@@ -19,7 +19,7 @@ const App = () => {
   }, []);
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: colorConstants?.goldLight}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: colorConstants?.white}}>
       {Platform?.OS === 'ios' && <StatusBar barStyle={'dark-content'} />}
       {showRealApp ? (
         <RootNavigator />

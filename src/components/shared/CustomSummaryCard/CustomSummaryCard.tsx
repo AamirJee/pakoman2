@@ -20,14 +20,13 @@ const CustomSummaryCard = ({
   transactionType,
   units,
   index,
-  bgColor,
 }: CustomSummaryCardInterface) => {
   return (
     <CustomCard
       body={
         <View style={styles.cardContainer}>
           <View style={styles.cardInnerContainer}>
-            <View style={[styles.leftTextContainer,{backgroundColor:bgColor}]}>
+            <View style={styles.leftTextContainer}>
               <View style={styles.textContainer}>
                 <CustomTitle
                   title={index == 0 ? languageTxt.fund : languageTxt.fromFund}
@@ -59,7 +58,7 @@ const CustomSummaryCard = ({
                 fontSize={fontConstants.middle}
               />
               <CustomTitle
-                title={`${numberWithCommas(Number(amount).toFixed(2))}`}
+                title={`PKR ${numberWithCommas(Number(amount).toFixed(2))}`}
                 fontSize={fontConstants.small}
                 fontWeight={fontConstants.fontWeight600}
                 titleColor={colorConstants?.secondaryLight}
@@ -112,7 +111,6 @@ CustomSummaryCard.propTypes = {
   transactionDate: PropTypes.string.isRequired,
   transactionType: PropTypes.string.isRequired,
   units: PropTypes.string.isRequired,
-  bgColor:PropTypes.string,
 };
 
 CustomSummaryCard.defaultProps = {
@@ -122,7 +120,6 @@ CustomSummaryCard.defaultProps = {
   transactionDate: '',
   transactionType: '',
   units: '',
-  bgColor:'',
 };
 
 export default CustomSummaryCard;

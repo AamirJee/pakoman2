@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { PieChart } from 'react-native-gifted-charts';
-import { FlatList, ScrollView, Text, View } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {PieChart} from 'react-native-gifted-charts';
+import {FlatList, ScrollView, Text, View} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { styles } from './styles';
-import { numberWithCommas } from '../../../../utils/function';
-import { languageTxt } from '../../../../utils/constants/languageTxt';
-import { fontConstants } from '../../../../utils/constants/fontConstants';
-import { colorConstants } from '../../../../utils/constants/colorConstants';
-import { useDashboardChartInfo } from '../../../../modules/m_transactions/hooks';
-import { dimensionConstants } from '../../../../utils/constants/dimensionConstants';
+import {styles} from './styles';
+import {numberWithCommas} from '../../../../utils/function';
+import {languageTxt} from '../../../../utils/constants/languageTxt';
+import {fontConstants} from '../../../../utils/constants/fontConstants';
+import {colorConstants} from '../../../../utils/constants/colorConstants';
+import {useDashboardChartInfo} from '../../../../modules/m_transactions/hooks';
+import {dimensionConstants} from '../../../../utils/constants/dimensionConstants';
 
 import Loader from '../../../shared/Loader';
 import CustomCard from '../../../shared/CustomCard';
@@ -18,14 +18,10 @@ import HeaderLayout from '../../../layouts/HeaderLayout';
 import CustomChartLabel from '../../../shared/CustomChartLabel';
 import CustomPortfolioCard from '../../../shared/CustomPortfolioCard';
 import CustomIconLabelValue from '../../../shared/CustomIconLabelValue';
-import { useAuthentication } from '../../../../utils/globalHooks';
 
 const Home = () => {
-  const [mngmntCompany, setMngmntCompany] = useState('');
-  const [bgColor, setBgColor] = useState(colorConstants.primary);
-  const { data: authData }: any = useAuthentication();
+  const {data: userChat} = useDashboardChartInfo();
 
-  const { data: userChat } = useDashboardChartInfo();
   const [isScrollEnabled, setIsScrollEnabled] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
@@ -34,7 +30,6 @@ const Home = () => {
   const [totalUnits, setTotalUnits] = useState('0');
   const [pieData, setPieData]: any = useState([]);
   const [selectData, setSelectData]: any = useState();
- 
 
   useEffect(() => {
     setTimeout(() => {
@@ -82,16 +77,7 @@ const Home = () => {
       });
   }, [userChat]);
 
-  useEffect(() => {
-    if (authData?.userProfile)
-    //  console.log('Custom Fund Card', authData?.userProfile?.['MNGMNT COMPANY'])
-    setMngmntCompany(authData?.userProfile?.['MNGMNT COMPANY']);
-    let backgrndColor = mngmntCompany === 'RUSD Capital' ? colorConstants.primary : colorConstants.primaryB
-    setBgColor(backgrndColor) 
-   // console.log('Background Color HOME: ', bgColor)
-  }, [bgColor]);
-  
-  const renderCard = ({ item }: any) => {
+  const renderCard = ({item}: any) => {
     return (
       <View style={styles?.chartLabelContainer}>
         <CustomChartLabel label={item.name} color={item.color} />
@@ -103,24 +89,24 @@ const Home = () => {
     <>
       <Loader isLoading={isLoading} />
       <HeaderLayout
-        bgColor={bgColor}  //{mngmntCompany !== 'RUSD Investment Bank' ? colorConstants.primary : colorConstants.primaryB}
+        bgColor={colorConstants?.primary}
         body={
           <ScrollView style={styles?.container}>
-            <View style={[styles?.chartContainer, { backgroundColor: bgColor }]}></View>
+            <View style={styles?.chartContainer}></View>
             <View style={styles?.cardContainer}>
               <CustomCard
                 isClickable={false}
                 body={
                   <>
                     <View style={styles?.chartBody}>
-                      <View style={{ width: '60%' }}>
+                      <View style={{width: '60%'}}>
                         <PieChart
                           data={pieData}
                           donut
                           showGradient
                           sectionAutoFocus
-                          radius={90}
-                          innerRadius={70}
+                          radius={75}
+                          innerRadius={60}
                           innerCircleColor={colorConstants.white}
                           onPress={(val: any) => {
                             let newData: any = [];
@@ -129,7 +115,7 @@ const Home = () => {
                                 val?.value === item?.value &&
                                 val?.color === item?.color &&
                                 val?.gradientCenterColor ===
-                                item?.gradientCenterColor
+                                  item?.gradientCenterColor
                               ) {
                                 setSelectData({
                                   value: item?.value,
@@ -149,7 +135,7 @@ const Home = () => {
                                   val?.value === item?.value &&
                                   val?.color === item?.color &&
                                   val?.gradientCenterColor ===
-                                  item?.gradientCenterColor,
+                                    item?.gradientCenterColor,
                               });
                             });
                             setPieData(newData);
@@ -173,7 +159,7 @@ const Home = () => {
                         <CustomIconLabelValue
                           icon="database-outline"
                           label="Total Invest"
-                          value={`${numberWithCommas(
+                          value={`PKR ${numberWithCommas(
                             Number(totalInvest).toFixed(2),
                           )}`}
                         />
@@ -208,37 +194,36 @@ const Home = () => {
                 title="Portfolio Summary"
                 fontSize={fontConstants?.large}
                 titleColor={colorConstants?.drakGray}
-                extraStyles={{ marginVertical: dimensionConstants?.margin }}
+                extraStyles={{marginVertical: dimensionConstants?.margin}}
               />
 
-              {
-                data ? (
-                  data?.map((element: any, key) => (
-                    <CustomPortfolioCard
-                      key={key}
-                      fundsName={element?.name}
-                      unit={numberWithCommas(Number(element?.unit).toFixed(4))}
-                      investment={numberWithCommas(
-                        Number(element?.population).toFixed(2),
-                      )}
-                      percentages={Number(element?.percentages)}
-                      color={element?.color}
-                    />
-                  ))
-                ) : (
-                  <View style={styles.noDataContainer}>
-                    <MaterialCommunityIcons
-                      name="alert"
-                      size={dimensionConstants?.iconXXLarge}
-                      color={bgColor}
-                    />
-                    <CustomTitle
-                      title={languageTxt?.noDataAvailable}
-                      fontSize={fontConstants.large}
-                    />
-                  </View>
-                )
-              }
+              {data ? (
+                data?.map((element: any, key) => (
+                  <CustomPortfolioCard
+                    key={key}
+                    nav={numberWithCommas(Number(element?.nav).toFixed(4))}
+                    fundsName={element?.name}
+                    unit={numberWithCommas(Number(element?.unit).toFixed(4))}
+                    investment={numberWithCommas(
+                      Number(element?.population).toFixed(2),
+                    )}
+                    percentages={Number(element?.percentages)}
+                    color={element?.color}
+                  />
+                ))
+              ) : (
+                <View style={styles.noDataContainer}>
+                  <MaterialCommunityIcons
+                    name="alert"
+                    size={dimensionConstants?.iconXXLarge}
+                    color={colorConstants?.primary}
+                  />
+                  <CustomTitle
+                    title={languageTxt?.noDataAvailable}
+                    fontSize={fontConstants.large}
+                  />
+                </View>
+              )}
             </View>
           </ScrollView>
         }

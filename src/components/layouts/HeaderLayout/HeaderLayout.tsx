@@ -14,10 +14,10 @@ import {styles} from './styles';
 import {useAuthentication} from '../../../utils/globalHooks';
 
 const HeaderLayout = ({body, bgColor}: HeaderLayoutInterface) => {
-  //const [mngmntCompany, setMngmntCompany] = useState('');
-  const {data: authData}: any = useAuthentication();
   const [openMenu, setOpenMenu] = useState(false);
   const [username, setUsername] = useState('');
+
+  const {data: authData}: any = useAuthentication();
 
   useEffect(() => {
     if (authData?.userProfile)
@@ -33,11 +33,15 @@ const HeaderLayout = ({body, bgColor}: HeaderLayoutInterface) => {
           'https://i.ibb.co/j4jrJGx/csm-man-holger-von-der-heide-interview-header-02ae36db18.webp'
         }
         userStatus={true}
-        bgColor={bgColor} //{mngmntCompany === 'RUSD Capital' ?colorConstants.primary : colorConstants.primaryB}//bgColor={bgColor} 
+        bgColor={bgColor}
         icon={
           <Icon
             name="ellipsis-vertical-outline"
-            color={bgColor == colorConstants?.primary ? colorConstants?.white : colorConstants?.gray }
+            color={
+              bgColor == colorConstants?.primary
+                ? colorConstants?.white
+                : colorConstants?.gray
+            }
             size={dimensionConstants?.iconSmall}
           />
         }

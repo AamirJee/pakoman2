@@ -11,6 +11,7 @@ import {colorConstants} from '../../../utils/constants/colorConstants';
 import CustomTitle from '../CustomTitle';
 
 const CustomPortfolioCard = ({
+  nav,
   fundsName,
   unit,
   investment,
@@ -52,13 +53,18 @@ const CustomPortfolioCard = ({
       </View>
       <View style={styles(color).rightSide}>
         <CustomTitle
-          title={`${investment}`}
+          title={`PKR ${investment}`}
           titleColor={colorConstants?.secondary}
           fontSize={fontConstants.small}
         />
         <CustomTitle
           title={`Units ${unit}`}
-          titleColor={colorConstants?.secondaryLight}
+          titleColor={colorConstants?.secondary}
+          fontSize={fontConstants?.small}
+        />
+        <CustomTitle
+          title={`Nav ${unit}`}
+          titleColor={colorConstants?.secondary}
           fontSize={fontConstants?.small}
         />
       </View>

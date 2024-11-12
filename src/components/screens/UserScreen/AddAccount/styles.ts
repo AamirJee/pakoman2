@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colorConstants?.white,
-    borderRadius: dimensionConstants?.bottomNavBorderRadius,
   },
   formContainer: {
     width: '100%',

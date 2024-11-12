@@ -17,21 +17,14 @@ export const colorConstants = {
   lightGray: '#c4c3c3',
   xlightGray: '#f5f6fa',
 
-  primary: '#374265', //#d59b28, #3a6878
-  primaryB: '#60975c',
-
-  secondary: '#6d879a', //,#656465
-  secondaryB: '#c29277',
-  
-  gold: '#374265',//#ca970b
-  goldB: '#60975c',//#ca970b
+  primary: '#d59b28',
+  secondary: '#656465',
+  gold: '#ca970b',
 
   primaryLight: 'rgba(213, 155, 40, 0.1)',
   secondaryLight: '#656465ba',
-  goldLight: '#f0e9d7',//
+  goldLight: '#f0e9d7',
 
   backgroundColor: '#fff',
-  iconBg: '#374265',//#F6F7EB
-  iconBgB: '#60975c',//#F6F7EB
-
+  iconBg: '#F6F7EB',
 };

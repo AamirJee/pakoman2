@@ -7,7 +7,6 @@ export const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     marginHorizontal: dimensionConstants?.marginLarge,
-    
   },
   loginContainer: {
     width: '100%',

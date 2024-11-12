@@ -13,8 +13,8 @@ export const styles = StyleSheet.create({
     marginBottom: dimensionConstants?.marginLarge,
   },
   logo: {
-    width: 145,
-    height: 155,
+    width: 110,
+    height: 120,
   },
   loginContainer: {
     width: '100%',
